@@ -1,46 +1,43 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../mlx/mlx.h"
+# include "core.h"
+# include "entities.h"
+# include "graphics.h"
+# include "input.h"
+# include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
-# include <math.h>
-# include <fcntl.h>
 # include <string.h>
-# include <errno.h>
+# include <unistd.h>
 
-# include "../mlx/mlx.h"
+# define SCREEN_WIDTH 1024
+# define SCREEN_HEIGHT 768
+# define WINDOW_TITLE "cub3D - 3D"
 
-/* Window dimensions */
-# define WINDOW_WIDTH 1024
-# define WINDOW_HEIGHT 768
-# define WINDOW_TITLE "Cub3D - 3D Maze Explorer"
-
-/* Game constants */
-# define TILE_SIZE 64
-# define FOV 60
+# define CELL_SIZE 64
+# define FIELD_OF_VIEW 60
 # define MAX_RENDER_DISTANCE 1000
-# define MOVEMENT_SPEED 0.05
-# define ROTATION_SPEED 0.03
+# define MOVEMENT_VELOCITY 0.05
+# define ROTATION_VELOCITY 0.03
 
-/* Map characters */
-# define WALL_CHAR '1'
-# define FLOOR_CHAR '0'
+# define WALL_SYMBOL '1'
+# define FLOOR_SYMBOL '0'
 # define NORTH_SPAWN 'N'
 # define SOUTH_SPAWN 'S'
 # define EAST_SPAWN 'E'
 # define WEST_SPAWN 'W'
 
-/* Key codes (Linux X11) */
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_ESC 65307
+# define KEY_W 13
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_ESC 53
 
-/* Colors */
 # define COLOR_RED 0xFF0000
 # define COLOR_GREEN 0x00FF00
 # define COLOR_BLUE 0x0000FF
@@ -48,54 +45,43 @@
 # define COLOR_BLACK 0x000000
 # define COLOR_GRAY 0x808080
 
-/* Error codes */
-# define ERR_MALLOC 1
-# define ERR_FILE_OPEN 2
+# define ERR_MEMORY_ALLOC 1
+# define ERR_FILE_ACCESS 2
 # define ERR_INVALID_MAP 3
 # define ERR_MLX_INIT 4
 # define ERR_TEXTURE_LOAD 5
 
-/* Forward declarations */
-typedef struct s_game		t_game;
-typedef struct s_player		t_player;
-typedef struct s_map		t_map;
+typedef struct s_engine		t_engine;
+typedef struct s_character	t_character;
+typedef struct s_world		t_world;
 typedef struct s_renderer	t_renderer;
 typedef struct s_texture	t_texture;
 typedef struct s_ray		t_ray;
 
-/* Include MVC components */
-# include "model.h"
-# include "view.h"
-# include "controller.h"
-
-/* Main game structure */
-struct s_game
+struct						s_engine
 {
-	t_map			*map;
-	t_player		*player;
-	t_renderer		*renderer;
-	void			*mlx_ptr;
-	void			*win_ptr;
-	int				running;
+	t_world					*world;
+	t_character				*character;
+	t_renderer				*renderer;
+	void					*mlx_ptr;
+	void					*win_ptr;
+	int						is_running;
+	int						key_w;
+	int						key_a;
+	int						key_s;
+	int						key_d;
+	int						key_left;
+	int						key_right;
 };
 
-/* Utility functions */
-void	ft_error(char *message, int error_code);
-void	ft_cleanup(t_game *game);
-char	*ft_strdup(const char *s);
-int		ft_strlen(const char *s);
-int		ft_strcmp(const char *s1, const char *s2);
-char	**ft_split(char const *s, char c);
-void	*ft_calloc(size_t count, size_t size);
-void	free_string_array(char **array);
-char	*ft_strjoin(char const *s1, char const *s2);
-
-/* Performance monitoring */
-void	perf_start_frame(void);
-void	perf_end_frame(void);
-double	perf_get_current_fps(void);
-double	perf_get_average_fps(void);
-long	perf_get_frame_count(void);
-void	perf_reset_stats(void);
+void						error_handler(char *message, int error_code);
+void						cleanup_engine(t_engine *engine);
+char						*duplicate_string(const char *s);
+int							string_length(const char *s);
+int							compare_strings(const char *s1, const char *s2);
+char						**split_string(char const *s, char c);
+void						free_string_array(char **array);
+char						*join_strings(char const *s1, char const *s2);
+void						string_copy(char *dest, const char *src, int n);
 
 #endif

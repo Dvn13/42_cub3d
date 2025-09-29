@@ -1,18 +1,18 @@
 #include "cub3d.h"
 
-static int	validate_arguments(int argc, char **argv)
+static int	validate_command_line_arguments(int argc, char **argv)
 {
-	int	len;
+	int	length;
 
 	if (argc != 2)
 	{
-		write(STDERR_FILENO, "Usage: ./cub3D <map_file.cub>\n", 30);
+		write(STDERR_FILENO, "Usage: ./cub3D <map_file.cub>\n", 32);
 		return (0);
 	}
-	len = ft_strlen(argv[1]);
-	if (len < 5 || ft_strcmp(&argv[1][len - 4], ".cub") != 0)
+	length = string_length(argv[1]);
+	if (length < 5 || compare_strings(&argv[1][length - 4], ".cub") != 0)
 	{
-		ft_error("Map file must have .cub extension", ERR_INVALID_MAP);
+		error_handler("Map file must have .cub extension", ERR_INVALID_MAP);
 		return (0);
 	}
 	return (1);
@@ -20,19 +20,19 @@ static int	validate_arguments(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_game	*game;
+	t_engine	*engine;
 
-	if (!validate_arguments(argc, argv))
+	if (!validate_command_line_arguments(argc, argv))
 		return (1);
-	game = ft_calloc(1, sizeof(t_game));
-	if (!game)
-		ft_error(NULL, ERR_MALLOC);
-	if (!game_init(game, argv[1]))
+	engine = safe_calloc(1, sizeof(t_engine));
+	if (!engine)
+		error_handler(NULL, ERR_MEMORY_ALLOC);
+	if (!engine_initialize(engine, argv[1]))
 	{
-		ft_cleanup(game);
+		cleanup_engine(engine);
 		return (1);
 	}
-	game_loop(game);
-	ft_cleanup(game);
+	engine_main_loop(engine);
+	cleanup_engine(engine);
 	return (0);
 }
