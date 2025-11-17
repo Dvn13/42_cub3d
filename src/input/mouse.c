@@ -29,11 +29,11 @@ int	handle_mouse_movement(int x, int y, t_engine *engine)
 	delta_x = x - g_last_mouse_x;
 	if (delta_x > 0)
 	{
-		rotate_character_right(engine->character);
+		rotate_character_left(engine->character);
 	}
 	else if (delta_x < 0)
 	{
-		rotate_character_left(engine->character);
+		rotate_character_right(engine->character);
 	}
 	g_last_mouse_x = x;
 	return (0);

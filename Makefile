@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+MLX_FLAGS = -Lmlx -lmlx -lXext -lX11 -lm
 
 SRCDIR = src
 OBJDIR = obj
