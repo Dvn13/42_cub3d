@@ -51,11 +51,11 @@ int	handle_mouse_click(int button, int x, int y, t_engine *engine)
 		if (g_mouse_enabled)
 		{
 			g_last_mouse_x = SCREEN_WIDTH / 2;
-			mlx_mouse_hide();
+//			mlx_mouse_hide();
 		}
 		else
 		{
-			mlx_mouse_show();
+//			mlx_mouse_show();
 		}
 	}
 	return (0);

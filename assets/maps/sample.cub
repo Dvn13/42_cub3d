@@ -1,10 +1,10 @@
-NO ./assets/textures/north_wall.xpm
-SO ./assets/textures/south_wall.xpm
-WE ./assets/textures/west_wall.xpm
-EA ./assets/textures/east_wall.xpm
+NO ./assets/textures/wall1.xpm
+SO ./assets/textures/wall2.xpm
+WE ./assets/textures/wall3.xpm
+EA ./assets/textures/wall4.xpm
 
-F 220,100,0
-C 225,30,0
+F 71,62,55
+C 216,227,231
 
         1111111111111111111111111
         1000000000110000000000001

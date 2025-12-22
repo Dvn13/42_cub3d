@@ -20,4 +20,9 @@ void	engine_shutdown(t_engine *engine)
 {
 	if (engine)
 		engine->is_running = 0;
+	mlx_destroy_image(engine->mlx_ptr, engine->renderer->image_ptr);
+	mlx_destroy_window(engine->mlx_ptr, engine->win_ptr);
+	mlx_destroy_display(engine->mlx_ptr);
+	free(engine->mlx_ptr);
+	exit(0);
 }

@@ -1,4 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/20 15:34:59 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/21 14:59:08 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/cub3d.h"
 
 static int	validate_command_line_arguments(int argc, char **argv)
 {
@@ -34,5 +46,5 @@ int	main(int argc, char **argv)
 	}
 	engine_main_loop(engine);
 	cleanup_engine(engine);
-	return (0);
+	return (0); 
 }

@@ -1,8 +1,10 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-MLX_FLAGS = -Lmlx -lmlx -lXext -lX11 -lm
+CFLAGS = -Wall -Wextra -Werror
+MLX_DIR = ./mlx
+MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_FLAGS = -L$(MLX_DIR) -Lmlx -lmlx -lXext -lX11 -lm
 
 SRCDIR = src
 OBJDIR = obj
@@ -39,8 +41,11 @@ INCLUDES = -I$(INCDIR) -Imlx
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
+$(NAME): $(MLX_LIB) $(OBJECTS)
 	$(CC) $(OBJECTS) $(MLX_FLAGS) -o $(NAME)
+
+$(MLX_LIB):
+	@make -C $(MLX_DIR)
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
