@@ -1,5 +1,4 @@
 NAME = cub3D
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 MLX_DIR = ./mlx
@@ -19,6 +18,7 @@ SOURCES = src/main.c \
 		  src/entities/world.c \
 		  src/entities/world_parsing.c \
 		  src/entities/world_utils.c \
+		  src/entities/world_validation.c \
 		  src/graphics/ray_tracer.c \
 		  src/graphics/ray_calculation.c \
 		  src/graphics/renderer.c \
@@ -42,7 +42,7 @@ INCLUDES = -I$(INCDIR) -Imlx
 all: $(NAME)
 
 $(NAME): $(MLX_LIB) $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)

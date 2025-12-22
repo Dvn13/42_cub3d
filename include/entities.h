@@ -98,6 +98,8 @@ int							texture_load_from_file(t_texture *texture,
 								void *mlx_ptr, char *path);
 void						texture_destroy(t_texture *texture, void *mlx_ptr);
 
+int							check_map_closed(t_world *world);
+
 int							parse_color_value(char *color_str);
 int							is_map_line(char *line);
 void						parse_map_dimensions(char **lines, int start_index,

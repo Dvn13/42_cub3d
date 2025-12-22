@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   world_parsing.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/22 19:23:45 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static char	*read_file_content(const char *filename)
@@ -135,5 +147,10 @@ int	world_parse_file(t_world *world, const char *filename)
 	}
 	copy_map_data(lines, map_start, world);
 	free_string_array(lines);
+	if (!check_map_closed(world))
+	{
+        error_handler("Map is not closed / surrounded by walls", ERR_INVALID_MAP);
+        return (0);
+    }
 	return (1);
 }
