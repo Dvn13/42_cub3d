@@ -1,2 +1,8 @@
-./mlx
-./gitignore
+mlx/
+*.o
+*.obj
+*.a
+*.dylib
+.DS_Store
+.vscode/
+cub3D
