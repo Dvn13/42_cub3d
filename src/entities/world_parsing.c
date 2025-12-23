@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 01:36:33 by mdivan           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:02:35 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static char	*read_file_content(const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
+	{
+		error_handler(strerror(errno), ERR_INVALID_MAP);
 		return (NULL);
+	}
 	content = duplicate_string("");
 	if (!content)
 	{
@@ -56,13 +59,45 @@ static int	parse_texture_line(t_world *world, char *line)
 		return (0);
 	}
 	if (compare_strings(tokens[0], "NO") == 0)
+	{
+		if (world->north_texture_path)
+		{
+			error_handler("Duplicate texture (NO)", 2);
+			free_string_array(tokens);
+			return (0);
+		}
 		world->north_texture_path = duplicate_string(tokens[1]);
+	}
 	else if (compare_strings(tokens[0], "SO") == 0)
+	{
+		if (world->south_texture_path)
+		{
+			error_handler("Duplicate texture (SO)", 2);
+			free_string_array(tokens);
+			return (0);
+		}
 		world->south_texture_path = duplicate_string(tokens[1]);
+	}
 	else if (compare_strings(tokens[0], "WE") == 0)
+	{
+		if (world->west_texture_path)
+		{
+			error_handler("Duplicate texture (WE)", 2);
+			free_string_array(tokens);
+			return (0);
+		}
 		world->west_texture_path = duplicate_string(tokens[1]);
+	}
 	else if (compare_strings(tokens[0], "EA") == 0)
+	{
+		if (world->east_texture_path)
+		{
+			error_handler("Duplicate texture (EA)", 2);
+			free_string_array(tokens);
+			return (0);
+		}	
 		world->east_texture_path = duplicate_string(tokens[1]);
+	}
 	else
 	{
 		free_string_array(tokens);
@@ -80,6 +115,18 @@ static int	parse_color_line(t_world *world, char *line)
 	tokens = split_string(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1])
 	{
+		free_string_array(tokens);
+		return (0);
+	}
+	if (compare_strings(tokens[0], "F") == 0 && world->floor_color != -1)
+	{
+		error_handler("Duplicate color (F)", 2);
+		free_string_array(tokens);
+		return (0);
+	}
+	if (compare_strings(tokens[0], "C") == 0 && world->ceiling_color != -1)
+	{
+		error_handler("Duplicate color (C)", 2);
 		free_string_array(tokens);
 		return (0);
 	}
@@ -147,10 +194,5 @@ int	world_parse_file(t_world *world, const char *filename)
 	}
 	copy_map_data(lines, map_start, world);
 	free_string_array(lines);
-	if (!check_map_closed(world))
-	{
-        error_handler("Map is not closed / surrounded by walls", ERR_INVALID_MAP);
-        return (0);
-    }
 	return (1);
 }

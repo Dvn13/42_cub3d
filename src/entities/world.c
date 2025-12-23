@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 01:37:16 by mdivan           ###   ########.fr       */
+/*   Updated: 2025/12/23 18:35:02 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ int	world_validate(t_world *world)
 
 	if (!world || !world->grid)
 		return (0);
+	if (!world->north_texture_path || !world->south_texture_path
+			|| !world->east_texture_path || !world->west_texture_path)
+	{
+		error_handler("Missing texture (NO, SO, EA, WE)", 2);
+		return (0);
+	}
+	if (world->floor_color == -1 || world->ceiling_color == -1)
+	{
+		error_handler("Missing color codes (F, C)", 2);
+		return (0);
+	}
 	character_count = 0;
 	i = 0;
 	while (i < world->height)
@@ -55,7 +66,12 @@ int	world_validate(t_world *world)
 		i++;
 	}
 	world->character_count = character_count;
-	return (character_count == 1);
+	if (character_count != 1)
+	{
+		error_handler("Map should contain just one player(N, S, E, W)", 2);
+		return (0);
+	}
+	return (1);
 }
 
 int	world_is_wall(t_world *world, int x, int y)

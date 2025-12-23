@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 14:30:56 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 17:51:33 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
 # include <string.h>
 # include <unistd.h>
 

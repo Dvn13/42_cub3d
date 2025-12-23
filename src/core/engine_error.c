@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   engine_error.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 18:05:26 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/23 18:05:27 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	error_handler(char *message, int error_code)
 {
+	write(STDERR_FILENO, "Error\n", 6);
 	if (message)
 		write(STDERR_FILENO, message, string_length(message));
 	write(STDERR_FILENO, "\n", 1);
