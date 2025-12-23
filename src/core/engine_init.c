@@ -57,9 +57,9 @@ int	engine_initialize(t_engine *engine, char *map_file)
 {
 	if (!engine)
 		return (0);
-	if (!initialize_mlx(engine))
-		return (0);
 	if (!initialize_world(engine, map_file))
+		return (0);
+	if (!initialize_mlx(engine))
 		return (0);
 	if (!initialize_character_and_renderer(engine))
 		return (0);
