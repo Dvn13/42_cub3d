@@ -18,7 +18,7 @@
 # define WINDOW_TITLE "cub3D - 3D"
 
 # define CELL_SIZE 64
-# define FIELD_OF_VIEW 60
+# define FIELD_OF_VIEW 66
 # define MAX_RENDER_DISTANCE 1000
 # define MOVEMENT_VELOCITY 0.05
 # define ROTATION_VELOCITY 0.03

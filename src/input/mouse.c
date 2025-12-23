@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 13:57:12 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/23 13:57:13 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	g_mouse_enabled = 0;
@@ -29,11 +41,11 @@ int	handle_mouse_movement(int x, int y, t_engine *engine)
 	delta_x = x - g_last_mouse_x;
 	if (delta_x > 0)
 	{
-		rotate_character_left(engine->character);
+		rotate_character_right(engine->character);
 	}
 	else if (delta_x < 0)
 	{
-		rotate_character_right(engine->character);
+		rotate_character_left(engine->character);
 	}
 	g_last_mouse_x = x;
 	return (0);

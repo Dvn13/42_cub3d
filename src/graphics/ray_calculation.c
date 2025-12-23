@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_calculation.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 13:04:36 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/23 14:00:16 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ray_trace_calculate_step_and_side_dist(t_ray *ray,
@@ -39,6 +51,8 @@ void	ray_trace_calculate_wall_distance(t_ray *ray, t_character *character)
 	else
 		ray->perp_wall_dist = (ray->map_y - character->pos.y + (1 - ray->step_y)
 				/ 2) / ray->ray_dir_y;
+	if (ray->perp_wall_dist < 0)
+		ray->perp_wall_dist = 0.0001;
 }
 
 void	ray_trace_calculate_draw_limits(t_ray *ray)
@@ -49,6 +63,7 @@ void	ray_trace_calculate_draw_limits(t_ray *ray)
 	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
+	
 	ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
 	if (ray->draw_end >= SCREEN_HEIGHT)
 		ray->draw_end = SCREEN_HEIGHT - 1;

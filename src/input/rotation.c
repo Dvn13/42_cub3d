@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotation.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 13:12:14 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/23 13:38:50 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	rotate_character_left(t_character *character)
+void	rotate_character_right(t_character *character)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -19,7 +31,7 @@ void	rotate_character_left(t_character *character)
 		+ character->plane.y * cos(ROTATION_VELOCITY);
 }
 
-void	rotate_character_right(t_character *character)
+void	rotate_character_left(t_character *character)
 {
 	double	old_dir_x;
 	double	old_plane_x;
