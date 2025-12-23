@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
+/*   Updated: 2025/12/23 14:30:56 by gbodur           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -22,6 +34,7 @@
 # define MAX_RENDER_DISTANCE 1000
 # define MOVEMENT_VELOCITY 0.05
 # define ROTATION_VELOCITY 0.03
+# define COLLISION_BUFFER 0.2
 
 # define WALL_SYMBOL '1'
 # define FLOOR_SYMBOL '0'
@@ -37,8 +50,6 @@
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
 #  define KEY_ESC 65307
-
-
 
 # define COLOR_RED 0xFF0000
 # define COLOR_GREEN 0x00FF00
