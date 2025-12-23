@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 14:01:41 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:37:34 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 	if (tex_x >= texture->width)
 		tex_x = texture->width - 1;
 	step = 1.0 * texture->height / ray->line_height;
-	tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2 + ray->line_height / 2) * step;
-	
+	tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2
+			+ ray->line_height / 2) * step;
 	y = ray->draw_start;
 	while (y <= ray->draw_end)
 	{
@@ -92,7 +92,6 @@ void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 			tex_y = 0;
 		if (tex_y >= texture->height)
 			tex_y = texture->height - 1;
-		
 		color = renderer_get_pixel_color(texture, tex_x, tex_y);
 		renderer_put_pixel(renderer, x, y, color);
 		y++;

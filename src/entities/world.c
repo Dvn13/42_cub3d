@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 18:35:02 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:27:47 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	world_validate(t_world *world)
 	if (!world || !world->grid)
 		return (0);
 	if (!world->north_texture_path || !world->south_texture_path
-			|| !world->east_texture_path || !world->west_texture_path)
+		|| !world->east_texture_path || !world->west_texture_path)
 	{
 		error_handler("Missing texture (NO, SO, EA, WE)", 2);
 		return (0);

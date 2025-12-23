@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:31:30 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:06:43 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:36:48 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ static int	initialize_world(t_engine *engine, char *map_file)
 	}
 	if (!check_map_closed(engine->world))
 	{
-        error_handler("Map is not closed or surrounded by walls", ERR_INVALID_MAP);
-        return (0);
-    }
+		error_handler("Map is not closed or surrounded by walls",
+			ERR_INVALID_MAP);
+		return (0);
+	}
 	return (1);
 }
 
@@ -62,7 +63,7 @@ static int	initialize_character_and_renderer(t_engine *engine)
 		return (0);
 	if (!load_all_textures(engine->renderer, engine->world, engine->mlx_ptr))
 	{
-		error_handler("Texture loading failed. Broken texture or missing texture path", ERR_TEXTURE_LOAD);
+		error_handler("Texture loading failed", ERR_TEXTURE_LOAD);
 		return (0);
 	}
 	return (1);

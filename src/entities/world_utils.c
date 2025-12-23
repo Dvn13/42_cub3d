@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:18:45 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:26:17 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,5 @@ void	copy_map_data(char **lines, int start_index, t_world *world)
 		world->grid[i][j] = '\0';
 		i++;
 	}
-	world->grid[i] = NULL; 
+	world->grid[i] = NULL;
 }

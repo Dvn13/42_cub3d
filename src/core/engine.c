@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:06 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:19:07 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:35:00 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	engine_update(t_engine *engine)
 void	engine_shutdown(t_engine *engine)
 {
 	if (!engine)
-		return;
+		return ;
 	engine->is_running = 0;
 	cleanup_engine(engine);
 	exit(0);

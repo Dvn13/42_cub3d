@@ -6,21 +6,21 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/22 19:24:58 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:31:50 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char **duplicate_map(t_world *world)
+static char	**duplicate_map(t_world *world)
 {
-	char **map_copy;
+	char	**map_copy;
 	int		i;
-	
+
+	i = 0;
 	map_copy = malloc(sizeof(char *) * (world->height + 1));
 	if (!map_copy)
 		return (NULL);
-	i = 0;
 	while (i < world->height)
 	{
 		map_copy[i] = duplicate_string(world->grid[i]);
@@ -35,7 +35,7 @@ static char **duplicate_map(t_world *world)
 	return (map_copy);
 }
 
-static int flood_fill(t_world *world, char  **map, int x, int y)
+static int	flood_fill(t_world *world, char **map, int x, int y)
 {
 	int	rows;
 	int	cols;
@@ -43,7 +43,6 @@ static int flood_fill(t_world *world, char  **map, int x, int y)
 	rows = world->height;
 	if (y < 0 || y >= rows || !map[y])
 		return (0);
-	
 	cols = string_length(map[y]);
 	if (x < 0 || x >= cols)
 		return (0);
@@ -60,7 +59,6 @@ static int flood_fill(t_world *world, char  **map, int x, int y)
 		return (0);
 	if (!flood_fill(world, map, x, y - 1))
 		return (0);
-
 	return (1);
 }
 
@@ -74,7 +72,6 @@ int	check_map_closed(t_world *world)
 	map_copy = duplicate_map(world);
 	if (!map_copy)
 		return (0);
-	
 	player_found = 0;
 	y = 0;
 	while (y < world->height && !player_found)
@@ -98,7 +95,6 @@ int	check_map_closed(t_world *world)
 		free_string_array(map_copy);
 		return (0);
 	}
-	
 	free_string_array(map_copy);
 	return (1);
 }

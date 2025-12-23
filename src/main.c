@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:34:59 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 17:36:35 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 19:36:06 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ static int	validate_command_line_arguments(int argc, char **argv)
 	}
 	length = string_length(argv[1]);
 	if (length < 5 || compare_strings(&argv[1][length - 4], ".cub") != 0
- 		|| (length >= 5 && argv[1][length - 5] == '/'))
+		|| (length >= 5 && argv[1][length - 5] == '/'))
 	{
-		error_handler("Map file must have a name and .cub extension", ERR_INVALID_MAP);
+		error_handler("Map file must have a name and .cub extension",
+			ERR_INVALID_MAP);
 		return (0);
 	}
 	return (1);
@@ -47,5 +48,5 @@ int	main(int argc, char **argv)
 	}
 	engine_main_loop(engine);
 	cleanup_engine(engine);
-	return (0); 
+	return (0);
 }
