@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/22 19:23:45 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 01:36:33 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	world_parse_file(t_world *world, const char *filename)
 		return (0);
 	}
 	parse_map_dimensions(lines, map_start, world);
-	world->grid = safe_calloc(world->height, sizeof(char *));
+	world->grid = safe_calloc(world->height + 1, sizeof(char *));
 	if (!world->grid)
 	{
 		free_string_array(lines);

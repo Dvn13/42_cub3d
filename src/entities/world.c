@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/22 17:52:33 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/23 01:37:16 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,21 @@ char	world_get_cell(t_world *world, int x, int y)
 
 void	world_destroy(t_world *world)
 {
+	int	i;
+
 	if (!world)
 		return ;
 	if (world->grid)
-		free_string_array(world->grid);
+	{
+		i = 0;
+		while (i < world->height)
+		{
+			if (world->grid[i])
+				safe_free(world->grid[i]);
+			i++;
+		}
+		safe_free(world->grid);
+	}
 	if (world->north_texture_path)
 		safe_free(world->north_texture_path);
 	if (world->south_texture_path)

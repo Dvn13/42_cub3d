@@ -122,4 +122,5 @@ void	copy_map_data(char **lines, int start_index, t_world *world)
 		world->grid[i][j] = '\0';
 		i++;
 	}
+	world->grid[i] = NULL; 
 }
