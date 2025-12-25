@@ -6,39 +6,53 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 13:57:12 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 13:57:13 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/25 21:31:20 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	g_mouse_enabled = 0;
-static int	g_last_mouse_x = 0;
+// void	mouse_initialize(void)
+// {
+	
+// }
 
-void	mouse_initialize(void)
+void	mouse_toggle(t_engine *engine)
 {
-	g_mouse_enabled = 0;
-	g_last_mouse_x = SCREEN_WIDTH / 2;
+	if (!engine)
+		return ;
+	engine->mouse_enabled = !engine->mouse_enabled;
+	if (engine->mouse_enabled)
+	{
+		mlx_mouse_move(engine->mlx_ptr, engine->win_ptr,
+			SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		mlx_mouse_hide(engine->mlx_ptr, engine->win_ptr); 
+	}
+	else
+	{
+		 mlx_mouse_show(engine->mlx_ptr, engine->win_ptr);
+	}
 }
 
-void	mouse_toggle(void)
-{
-	g_mouse_enabled = !g_mouse_enabled;
-}
+// int	mouse_is_enabled(void)
+// {
 
-int	mouse_is_enabled(void)
-{
-	return (g_mouse_enabled);
-}
+// }
 
 int	handle_mouse_movement(int x, int y, t_engine *engine)
 {
 	int	delta_x;
+	int	center_x;
+	int	center_y;
 
-	if (!engine || !engine->character || !g_mouse_enabled)
-		return (0);
 	(void)y;
-	delta_x = x - g_last_mouse_x;
+	if (!engine || !engine->mouse_enabled)
+		return (0);
+	center_x = SCREEN_WIDTH / 2;
+	center_y = SCREEN_HEIGHT / 2;
+	delta_x = x -center_x;
+	if (delta_x == 0)
+		return (0);
 	if (delta_x > 0)
 	{
 		rotate_character_right(engine->character);
@@ -47,7 +61,7 @@ int	handle_mouse_movement(int x, int y, t_engine *engine)
 	{
 		rotate_character_left(engine->character);
 	}
-	g_last_mouse_x = x;
+	mlx_mouse_move(engine->mlx_ptr, engine->win_ptr, center_x, center_x);
 	return (0);
 }
 
@@ -58,17 +72,6 @@ int	handle_mouse_click(int button, int x, int y, t_engine *engine)
 	(void)x;
 	(void)y;
 	if (button == 1)
-	{
-		mouse_toggle();
-		if (g_mouse_enabled)
-		{
-			g_last_mouse_x = SCREEN_WIDTH / 2;
-//			mlx_mouse_hide();
-		}
-		else
-		{
-//			mlx_mouse_show();
-		}
-	}
+		mouse_toggle(engine);
 	return (0);
 }

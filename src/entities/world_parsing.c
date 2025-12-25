@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:29:53 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/25 15:08:10 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static char	*read_file_content(const char *filename)
 		close(fd);
 		return (NULL);
 	}
-	bytes_read = read(fd, buffer, 1023);
-	while (bytes_read > 0)
+	while ((bytes_read = read(fd, buffer, 1023)) > 0)
 	{
 		buffer[bytes_read] = '\0';
 		temp = join_strings(content, buffer);

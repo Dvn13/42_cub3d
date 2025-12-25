@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 17:51:33 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/25 19:13:34 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ struct						s_engine
 	int						key_d;
 	int						key_left;
 	int						key_right;
+	int						mouse_enabled;
 };
 
 void						error_handler(char *message, int error_code);
