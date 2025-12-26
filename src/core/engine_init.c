@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:31:30 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:36:48 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:22:53 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	engine_initialize(t_engine *engine, char *map_file)
 	if (!initialize_character_and_renderer(engine))
 		return (0);
 	engine->is_running = 1;
-	mouse_initialize();
+	engine->mouse_enabled = 1;
 	setup_event_hooks(engine);
 	return (1);
 }

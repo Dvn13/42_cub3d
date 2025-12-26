@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/25 19:13:34 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:27:54 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define KEY_M 109
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
 #  define KEY_ESC 65307

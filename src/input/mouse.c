@@ -6,16 +6,11 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 13:57:12 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/25 21:31:20 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:21:53 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	mouse_initialize(void)
-// {
-	
-// }
 
 void	mouse_toggle(t_engine *engine)
 {
@@ -33,11 +28,6 @@ void	mouse_toggle(t_engine *engine)
 		 mlx_mouse_show(engine->mlx_ptr, engine->win_ptr);
 	}
 }
-
-// int	mouse_is_enabled(void)
-// {
-
-// }
 
 int	handle_mouse_movement(int x, int y, t_engine *engine)
 {
@@ -61,7 +51,7 @@ int	handle_mouse_movement(int x, int y, t_engine *engine)
 	{
 		rotate_character_left(engine->character);
 	}
-	mlx_mouse_move(engine->mlx_ptr, engine->win_ptr, center_x, center_x);
+	mlx_mouse_move(engine->mlx_ptr, engine->win_ptr, center_x, center_y);
 	return (0);
 }
 

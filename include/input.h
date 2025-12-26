@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:27 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/25 21:31:31 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:23:14 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int		check_wall_collision(t_character *character, t_world *world,
 int		main_loop_hook(t_engine *engine);
 void	setup_event_hooks(t_engine *engine);
 
-// void	mouse_initialize(void);
 void	mouse_toggle(t_engine *engine);
-// int		mouse_is_enabled(void);
 int		handle_mouse_movement(int x, int y, t_engine *engine);
 int		handle_mouse_click(int button, int x, int y, t_engine *engine);
 

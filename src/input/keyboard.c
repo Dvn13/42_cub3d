@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:24 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 14:31:25 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/26 11:32:44 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_key_press(int keycode, t_engine *engine)
 {
-	if (!engine)
+	if (!engine || !engine->character)
 		return (0);
 	if (keycode == KEY_ESC)
 		engine_shutdown(engine);
@@ -26,6 +26,8 @@ int	handle_key_press(int keycode, t_engine *engine)
 		engine->key_s = 1;
 	else if (keycode == KEY_D)
 		engine->key_d = 1;
+	else if (keycode == KEY_M)
+		mouse_toggle(engine);
 	else if (keycode == KEY_LEFT)
 		engine->key_left = 1;
 	else if (keycode == KEY_RIGHT)
