@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 18:24:32 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/29 18:38:48 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,44 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
+static int	count_commas(const char *str)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ',')
+			count++;
+		i++;
+	}
+	return (count);
+}
+static int	is_str_digit(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+		{
+			while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+				i++;
+			if (str[i] != '\0')
+				return (0);
+			break ;
+		}
+		i++;
+	}
+	return (1);
+}
 int	parse_color_value(char *color_str)
 {
 	char	**rgb_values;
@@ -48,9 +86,17 @@ int	parse_color_value(char *color_str)
 	int		b;
 	int		color;
 
+	if (count_commas(color_str) != 2)
+		return (-1);
 	rgb_values = split_string(color_str, ',');
 	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2]
 		|| rgb_values[3])
+	{
+		free_string_array(rgb_values);
+		return (-1);
+	}
+	if (!is_str_digit(rgb_values[0]) || !is_str_digit(rgb_values[1])
+        || !is_str_digit(rgb_values[2]))
 	{
 		free_string_array(rgb_values);
 		return (-1);
