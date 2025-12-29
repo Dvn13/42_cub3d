@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 14:40:07 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/29 18:14:59 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,73 @@ static char	*read_file_content(const char *filename)
 	}
 	close(fd);
 	return (content);
+}
+
+static int	is_config_line(char *str, int i)
+{
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	if (!str[i] || str[i] == '\n')
+		return (0);
+	if (str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E'
+		|| str[i] == 'F' || str[i] == 'C')
+		return (1);
+	return (0);
+}
+
+static int	validate_map_layout(char *content)
+{
+	int	i;
+	int	map_started;
+	int	gap_detected;
+	int	is_empty;
+	int	j;
+
+	i = 0;
+	map_started = 0;
+	gap_detected = 0;
+	while (content[i])
+	{
+		is_empty = 1;
+		j = i;
+		while (content[j] && content[j] != '\n')
+		{
+			if (content[j] != ' ' && content[j] != '\t' && content[j] != '\r')
+				is_empty = 0;
+			j++;
+		}
+		if (is_empty)
+		{
+			if (map_started)
+				gap_detected = 1;
+		}
+		else if (is_config_line(content, i))
+		{
+			if (map_started)
+			{
+				report_error("Map content must be the last element in file");
+				return (0);
+			}
+		}
+		else
+		{
+			if (gap_detected)
+			{
+				report_error("Map cannot be separated by empty lines");
+				return (0);
+			}
+			map_started = 1;
+		}
+		i = j;
+		if (content[i] == '\n')
+			i++;
+	}
+	if (!map_started)
+	{
+		report_error("No map content found");
+		return (0);
+	}
+	return (1);
 }
 
 static int	parse_texture_line(t_world *world, char *line)
@@ -159,6 +226,12 @@ int	world_parse_file(t_world *world, const char *filename)
 	content = read_file_content(filename);
 	if (!content)
 		return (0);
+	if (!validate_map_layout(content))
+	{
+		safe_free(content);
+		return (0);
+	}
+
 	lines = split_string(content, '\n');
 	safe_free(content);
 	if (!lines)
@@ -167,23 +240,33 @@ int	world_parse_file(t_world *world, const char *filename)
 	map_start = -1;
 	while (lines[i])
 	{
-		if (lines[i][0] && !is_map_line(lines[i]))
+		if (!lines[i][0])
 		{
-			if (!parse_texture_line(world, lines[i]) && !parse_color_line(world,
-					lines[i]))
+			i++;
+			continue;
+		}
+		
+		if (is_map_line(lines[i]))
+		{
+			if (map_start == -1)
+				map_start = i;
+		}
+		else
+		{
+			if (!parse_texture_line(world, lines[i]) && !parse_color_line(world, lines[i]))
 			{
 				free_string_array(lines);
 				report_error("Invalid line or character found in map file");
 				return (0);
 			}
 		}
-		else if (is_map_line(lines[i]) && map_start == -1)
-			map_start = i;
 		i++;
 	}
+
 	if (map_start == -1)
 	{
 		free_string_array(lines);
+		report_error("No map content found");
 		return (0);
 	}
 	parse_map_dimensions(lines, map_start, world);
