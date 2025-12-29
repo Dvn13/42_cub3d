@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/25 15:08:10 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/29 14:40:07 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*read_file_content(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		error_handler(strerror(errno), ERR_INVALID_MAP);
+		report_error(strerror(errno));
 		return (NULL);
 	}
 	content = duplicate_string("");
@@ -62,8 +62,8 @@ static int	parse_texture_line(t_world *world, char *line)
 	{
 		if (world->north_texture_path)
 		{
-			error_handler("Duplicate texture (NO)", 2);
 			free_string_array(tokens);
+			report_error("Duplicate texture (NO)");
 			return (0);
 		}
 		world->north_texture_path = duplicate_string(tokens[1]);
@@ -72,8 +72,8 @@ static int	parse_texture_line(t_world *world, char *line)
 	{
 		if (world->south_texture_path)
 		{
-			error_handler("Duplicate texture (SO)", 2);
 			free_string_array(tokens);
+			report_error("Duplicate texture (SO)");
 			return (0);
 		}
 		world->south_texture_path = duplicate_string(tokens[1]);
@@ -82,8 +82,8 @@ static int	parse_texture_line(t_world *world, char *line)
 	{
 		if (world->west_texture_path)
 		{
-			error_handler("Duplicate texture (WE)", 2);
 			free_string_array(tokens);
+			report_error("Duplicate texture (WE)");
 			return (0);
 		}
 		world->west_texture_path = duplicate_string(tokens[1]);
@@ -92,8 +92,8 @@ static int	parse_texture_line(t_world *world, char *line)
 	{
 		if (world->east_texture_path)
 		{
-			error_handler("Duplicate texture (EA)", 2);
 			free_string_array(tokens);
+			report_error("Duplicate texture (EA)");
 			return (0);
 		}	
 		world->east_texture_path = duplicate_string(tokens[1]);
@@ -173,6 +173,7 @@ int	world_parse_file(t_world *world, const char *filename)
 					lines[i]))
 			{
 				free_string_array(lines);
+				report_error("Invalid line or character found in map file");
 				return (0);
 			}
 		}

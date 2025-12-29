@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/26 11:27:54 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/29 13:42:12 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ struct						s_engine
 };
 
 void						error_handler(char *message, int error_code);
+int							report_error(char *message);
 void						cleanup_engine(t_engine *engine);
 char						*duplicate_string(const char *s);
 int							string_length(const char *s);
