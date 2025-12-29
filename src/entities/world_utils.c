@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 13:27:08 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/29 18:24:32 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	parse_color_value(char *color_str)
 	int		color;
 
 	rgb_values = split_string(color_str, ',');
-	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2])
+	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2]
+		|| rgb_values[3])
 	{
 		free_string_array(rgb_values);
 		return (-1);
