@@ -1,7 +1,9 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -Lmlx -lmlx -lXext -lX11 -lm
@@ -39,34 +41,35 @@ SOURCES = src/main.c \
 		  src/utils/memory_utils.c
 
 BONUS_SOURCES = bonus/main_bonus.c \
-				bonus/core/engine_bonus.c \
-				bonus/core/engine_init_bonus.c \
-				bonus/core/engine_error_bonus.c \
-				bonus/entities/character_bonus.c \
-				bonus/entities/texture_bonus.c \
-				bonus/entities/world_bonus.c \
-				bonus/entities/world_parsing_bonus.c \
-				bonus/entities/world_utils_bonus.c \
-				bonus/entities/world_validation_bonus.c \
-				bonus/graphics/ray_tracer_bonus.c \
-				bonus/graphics/ray_calculation_bonus.c \
-				bonus/graphics/renderer_bonus.c \
-				bonus/graphics/renderer_core_bonus.c \
-				bonus/graphics/render_drawing_bonus.c \
-				bonus/input/keyboard_bonus.c \
-				bonus/input/mouse_bonus.c \
-				bonus/input/movement_bonus.c \
-				bonus/input/rotation_bonus.c \
-				bonus/input/collision_bonus.c \
-				bonus/input/hooks_bonus.c \
-				bonus/utils/string_utils_bonus.c \
-				bonus/utils/string_array_utils_bonus.c \
-				bonus/utils/string_manipulation_bonus.c \
-				bonus/utils/memory_utils_bonus.c
+				bonus/core_bonus/engine_bonus.c \
+				bonus/core_bonus/engine_init_bonus.c \
+				bonus/core_bonus/engine_error_bonus.c \
+				bonus/entities_bonus/character_bonus.c \
+				bonus/entities_bonus/texture_bonus.c \
+				bonus/entities_bonus/world_bonus.c \
+				bonus/entities_bonus/world_parsing_bonus.c \
+				bonus/entities_bonus/world_utils_bonus.c \
+				bonus/entities_bonus/world_validation_bonus.c \
+				bonus/graphics_bonus/minimap_bonus.c \
+				bonus/graphics_bonus/ray_calculation_bonus.c \
+				bonus/graphics_bonus/ray_tracer_bonus.c \
+				bonus/graphics_bonus/renderer_bonus.c \
+				bonus/graphics_bonus/renderer_core_bonus.c \
+				bonus/graphics_bonus/render_drawing_bonus.c \
+				bonus/input_bonus/keyboard_bonus.c \
+				bonus/input_bonus/mouse_bonus.c \
+				bonus/input_bonus/movement_bonus.c \
+				bonus/input_bonus/rotation_bonus.c \
+				bonus/input_bonus/collision_bonus.c \
+				bonus/input_bonus/hooks_bonus.c \
+				bonus/utils_bonus/string_utils_bonus.c \
+				bonus/utils_bonus/string_array_utils_bonus.c \
+				bonus/utils_bonus/string_manipulation_bonus.c \
+				bonus/utils_bonus/memory_utils_bonus.c
 
 OBJECTS = $(SOURCES:%.c=$(OBJDIR)/%.o)
 
-BONUS_OBJECTS = $(BONUS_SOURCES:%.c=$(OBJDIR)/%.o)
+BONUS_OBJECTS = $(BONUS_SOURCES:%.c=$(OBJDIR_BONUS)/%.o)
 
 INCLUDES = -I$(INCDIR) -Imlx
 
@@ -86,6 +89,11 @@ bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(MLX_LIB) $(BONUS_OBJECTS)
 	$(CC) $(CFLAGS) $(BONUS_OBJECTS) $(MLX_FLAGS) -o $(NAME_BONUS)
+
+
+$(OBJDIR_BONUS)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR) $(OBJDIR_BONUS)

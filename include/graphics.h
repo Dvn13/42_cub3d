@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:19:25 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/30 17:55:17 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct			s_renderer
 	t_texture	*textures[4];
 };
 
+void			render_minimap(t_engine *engine);
 t_renderer		*renderer_create(void *mlx_ptr);
 void			renderer_destroy(t_renderer *renderer, void *mlx_ptr);
 void			renderer_clear_screen(t_renderer *renderer, int color);

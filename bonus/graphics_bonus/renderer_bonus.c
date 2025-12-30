@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   renderer.c                                         :+:      :+:    :+:   */
+/*   renderer_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:25 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:18:26 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/30 17:57:11 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	render_frame(t_engine *engine)
 	renderer_clear_screen(engine->renderer, COLOR_BLACK);
 	render_floor_ceiling(engine);
 	render_walls(engine);
+	render_minimap(engine);
 	renderer_draw_to_window(engine->renderer, engine->mlx_ptr, engine->win_ptr);
 }

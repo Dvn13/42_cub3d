@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 18:53:40 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/30 16:05:20 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@
 # define COLOR_WHITE 0xFFFFFF
 # define COLOR_BLACK 0x000000
 # define COLOR_GRAY 0x808080
+
+#define MINIMAP_SCALE 10
+#define MINIMAP_PAD 10
+#define COLOR_WALL 0x808080
+#define COLOR_FLOOR 0x202020
+#define COLOR_PLAYER 0xFF0000
 
 # define ERR_MEMORY_ALLOC 1
 # define ERR_FILE_ACCESS 2
