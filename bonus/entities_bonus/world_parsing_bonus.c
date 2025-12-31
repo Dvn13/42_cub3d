@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 13:26:30 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 20:58:48 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ static int	parse_texture_line(t_world *world, char *line)
 			free_string_array(tokens);
 			report_error("Duplicate texture (EA)");
 			return (0);
-		}	
+		}
 		world->east_texture_path = duplicate_string(tokens[1]);
 	}
 	else
@@ -174,10 +174,65 @@ static int	parse_texture_line(t_world *world, char *line)
 	return (1);
 }
 
-static int	parse_color_line(t_world *world, char *line)
+static char	*trim_space(char *str)
+{
+	char	*trimmed;
+	int		start;
+	int		end;
+	int		len;
+
+	if (!str)
+		return (NULL);
+	start = 0;
+	while (str[start] && (str[start] == ' ' || str[start] == '\t'
+			|| str[start] == '\n'))
+		start++;
+	end = string_length(str) - 1;
+	while (end > start && (str[end] == ' ' || str[end] == '\t'
+			|| str[end] == '\n'))
+		end--;
+	len = end - start + 1;
+	trimmed = (char *)malloc(sizeof(char) * (len + 1));
+	if (!trimmed)
+		return (NULL);
+	string_copy(trimmed, str + start, len);
+	trimmed[len] = '\0';
+	return (trimmed);
+}
+
+static int	has_extension(char *str, char *ext)
+{
+	int	str_len;
+	int	ext_len;
+	int	i;
+
+	if (!str || !ext)
+		return (0);
+	str_len = string_length(str);
+	ext_len = string_length(ext);
+	if (str_len < ext_len)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (compare_strings(&str[i], ext) == 0)
+			return (1);
+		i++;
+	}
+    if (str_len >= 4 && str[str_len - 4] == '.' &&  str[str_len - 3] == 'x'
+			&& str[str_len - 2] == 'p' && str[str_len - 1] == 'm')
+	{
+        return (1);
+	}
+	return (0);
+}
+
+static int	parse_color_or_texture(t_world *world, char *line)
 {
 	char	**tokens;
+	char	*trimmed_val;
 	int		color;
+	char	type;
 
 	tokens = split_string(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1])
@@ -185,61 +240,53 @@ static int	parse_color_line(t_world *world, char *line)
 		free_string_array(tokens);
 		return (0);
 	}
-	if (compare_strings(tokens[0], "F") == 0 && world->floor_color != -1)
-	{
-		error_handler("Duplicate color (F)", 2);
-		free_string_array(tokens);
-		return (0);
-	}
-	if (compare_strings(tokens[0], "C") == 0 && world->ceiling_color != -1)
-	{
-		error_handler("Duplicate color (C)", 2);
-		free_string_array(tokens);
-		return (0);
-	}
-	color = parse_color_value(tokens[1]);
-	if (color == -1)
+	if (compare_strings(tokens[0], "F") != 0 && compare_strings(tokens[0], "C") != 0)
 	{
 		free_string_array(tokens);
 		return (0);
 	}
-	if (compare_strings(tokens[0], "F") == 0)
-		world->floor_color = color;
-	else if (compare_strings(tokens[0], "C") == 0)
-		world->ceiling_color = color;
+	type = tokens[0][0];
+    trimmed_val = trim_space(tokens[1]);
+	if (has_extension(trimmed_val, ".xpm"))
+	{
+		if (type == 'F')
+		{
+			if (world->floor_texture_path)
+			{
+				free(trimmed_val);
+				free_string_array(tokens);
+				return (0);
+			}
+			world->floor_texture_path = duplicate_string(trimmed_val);
+		}
+		else if (type == 'C')
+		{
+			if (world->ceiling_texture_path)
+			{
+				free(trimmed_val);
+				free_string_array(tokens);
+				return (0);
+			}
+			world->ceiling_texture_path = duplicate_string(trimmed_val);
+		}
+	}
 	else
 	{
-		free_string_array(tokens);
-		return (0);
+		color = parse_color_value(trimmed_val);
+		if (color == -1)
+		{
+			free(trimmed_val);
+			free_string_array(tokens);
+			return (0);
+		}
+		if (type == 'F')
+			world->floor_color = color;
+		else
+			world->ceiling_color = color;
 	}
+	free(trimmed_val);
 	free_string_array(tokens);
 	return (1);
-}
-int parse_floor_ceiling(t_world *world, char *line, char type)
-{
-    char	*trimmed;
-	int		color;
-
-    trimmed = trim_space(line);
-    if (ft_strnstr(trimmed, ".xpm", ft_strlen(trimmed)))
-    {
-        if (type == 'F')
-            world->floor_texture_path = ft_strdup(trimmed);
-        else if (type == 'C')
-            world->ceiling_texture_path = ft_strdup(trimmed);
-    }
-    else
-    {
-        color = parse_color_value(trimmed);
-        if (color == -1)
-			return (0);
-        if (type == 'F')
-            world->floor_color = color;
-        else if (type == 'C')
-            world->ceiling_color = color;
-    }
-    free(trimmed);
-    return (1);
 }
 
 int	world_parse_file(t_world *world, const char *filename)
@@ -257,7 +304,6 @@ int	world_parse_file(t_world *world, const char *filename)
 		safe_free(content);
 		return (0);
 	}
-
 	lines = split_string(content, '\n');
 	safe_free(content);
 	if (!lines)
@@ -269,9 +315,8 @@ int	world_parse_file(t_world *world, const char *filename)
 		if (!lines[i][0])
 		{
 			i++;
-			continue;
+			continue ;
 		}
-		
 		if (is_map_line(lines[i]))
 		{
 			if (map_start == -1)
@@ -279,7 +324,8 @@ int	world_parse_file(t_world *world, const char *filename)
 		}
 		else
 		{
-			if (!parse_texture_line(world, lines[i]) && !parse_color_line(world, lines[i]))
+			if (!parse_texture_line(world, lines[i]) && 
+				!parse_color_or_texture(world, lines[i]))
 			{
 				free_string_array(lines);
 				report_error("Invalid line or character found in map file");
@@ -288,7 +334,6 @@ int	world_parse_file(t_world *world, const char *filename)
 		}
 		i++;
 	}
-
 	if (map_start == -1)
 	{
 		free_string_array(lines);

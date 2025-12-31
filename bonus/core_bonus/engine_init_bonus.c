@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   engine_init.c                                      :+:      :+:    :+:   */
+/*   engine_init_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:31:30 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 14:07:21 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 22:51:09 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ static int	initialize_character_and_renderer(t_engine *engine)
 	if (!engine->renderer)
 		return (0);
 	if (!load_all_textures(engine->renderer, engine->world, engine->mlx_ptr))
-	{
-		report_error("Texture loading failed");
-		return (0);
-	}
+		return (report_error("Texture loading failed"));
+	if (!load_bonus_textures(engine))
+    	return (report_error("Failed to load bonus textures"));
 	return (1);
 }
 

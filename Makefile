@@ -13,6 +13,7 @@ BONUSDIR = bonus
 OBJDIR = obj
 OBJDIR_BONUS = obj_bonus
 INCDIR = include
+INCBNSDIR = include_bonus
 
 SOURCES = src/main.c \
 		  src/core/engine.c \
@@ -73,6 +74,8 @@ BONUS_OBJECTS = $(BONUS_SOURCES:%.c=$(OBJDIR_BONUS)/%.o)
 
 INCLUDES = -I$(INCDIR) -Imlx
 
+INCLUDES_BONUS = -I$(INCBNSDIR) -Imlx
+
 all: $(NAME)
 
 $(NAME): $(MLX_LIB) $(OBJECTS)
@@ -93,7 +96,7 @@ $(NAME_BONUS): $(MLX_LIB) $(BONUS_OBJECTS)
 
 $(OBJDIR_BONUS)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES_BONUS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR) $(OBJDIR_BONUS)

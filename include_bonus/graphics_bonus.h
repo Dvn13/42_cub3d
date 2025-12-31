@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   graphics.h                                         :+:      :+:    :+:   */
+/*   graphics_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 20:48:25 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 22:52:06 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GRAPHICS_H
-# define GRAPHICS_H
+#ifndef GRAPHICS_BONUS_H
+# define GRAPHICS_BONUS_H
 
 typedef struct s_renderer	t_renderer;
 typedef	struct s_floor		t_floor;
+typedef struct s_texture	t_texture;
+typedef struct s_ray		t_ray;
+typedef struct s_engine		t_engine;
+typedef struct s_character	t_character;
+typedef struct s_world		t_world;
 
 struct			s_renderer
 {
@@ -28,6 +33,21 @@ struct			s_renderer
 	t_texture	*textures[4];
 	t_texture	*floor_texture;
 	t_texture	*ceiling_texture;
+};
+
+struct	s_floor
+{
+    float		ray_dir_x0;
+    float		ray_dir_y0;
+    float		ray_dir_x1;
+    float		ray_dir_y1;
+    float		row_dist;
+    float		step_x;
+    float		step_y;
+    float		floor_x;
+    float		floor_y;
+    int			tx;
+    int			ty;
 };
 
 void			render_minimap(t_engine *engine);
@@ -59,5 +79,5 @@ int				ray_trace_get_texture_index(t_ray *ray);
 
 int				load_all_textures(t_renderer *renderer, t_world *world,
 					void *mlx_ptr);
-
+int				load_bonus_textures(t_engine *engine);
 #endif

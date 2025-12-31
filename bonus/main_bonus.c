@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:34:59 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 14:41:04 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 20:57:15 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d_bonus.h"
+#include "cub3d_bonus.h"
 
 static int	validate_command_line_arguments(int argc, char **argv)
 {

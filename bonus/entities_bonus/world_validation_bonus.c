@@ -1,16 +1,70 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   world_validation.c                                 :+:      :+:    :+:   */
+/*   world_validation_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:31:50 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 22:06:33 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+static void	count_map_players(t_world *world)
+{
+	int	i;
+	int	j;
+
+	world->character_count = 0;
+	i = 0;
+	while (i < world->height)
+	{
+		j = 0;
+		while (world->grid[i][j])
+		{
+			if (world->grid[i][j] == 'N' || world->grid[i][j] == 'S' ||
+				world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
+			{
+				world->character_count++;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+static int	check_textures_loaded(t_world *world)
+{
+	if (!world->north_texture_path)
+		return (report_error("Missing North texture (NO)"));
+	if (!world->south_texture_path)
+		return (report_error("Missing South texture (SO)"));
+	if (!world->west_texture_path)
+		return (report_error("Missing West texture (WE)"));
+	if (!world->east_texture_path)
+		return (report_error("Missing East texture (EA)"));
+	return (1);
+}
+
+static int	check_floor_ceiling_set(t_world *world)
+{
+	if (world->floor_color == -1 && world->floor_texture_path == NULL)
+		return (report_error("Missing Floor specification (F: Color or Texture)"));
+	if (world->ceiling_color == -1 && world->ceiling_texture_path == NULL)
+		return (report_error("Missing Ceiling specification (C: Color or Texture)"));
+	return (1);
+}
+
+static int	check_player_exists(t_world *world)
+{
+	if (world->character_count == 0)
+		return (report_error("Map missing player start position (N,S,E,W)"));
+	if (world->character_count > 1)
+		return (report_error("Map has multiple player start positions"));
+	return (1);
+}
 
 static char	**duplicate_map(t_world *world)
 {
@@ -96,5 +150,21 @@ int	check_map_closed(t_world *world)
 		return (0);
 	}
 	free_string_array(map_copy);
+	return (1);
+}
+
+int	world_validate(t_world *world)
+{
+	if (!world || !world->grid)
+		return (report_error("Map data is missing or empty"));
+	count_map_players(world);
+	if (!check_textures_loaded(world))
+		return (0);
+	if (!check_floor_ceiling_set(world))
+		return (0);
+	if (!check_player_exists(world))
+		return (0);
+	if (!check_map_closed(world))
+		return (report_error("Map is not closed / surrounded by walls"));	
 	return (1);
 }
