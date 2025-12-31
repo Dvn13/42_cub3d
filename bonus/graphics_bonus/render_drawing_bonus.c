@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_drawing.c                                   :+:      :+:    :+:   */
+/*   render_drawing_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:37:34 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 15:37:49 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ void	render_walls(t_engine *engine)
 	}
 }
 
-void	render_floor_ceiling(t_engine *engine)
+static void	render_flat_background(t_engine *engine)
 {
 	int	x;
 	int	y;
 
-	if (!engine || !engine->renderer || !engine->world)
-		return ;
 	y = 0;
 	while (y < SCREEN_HEIGHT)
 	{
@@ -57,6 +55,70 @@ void	render_floor_ceiling(t_engine *engine)
 		}
 		y++;
 	}
+}
+
+static void	draw_scanline(t_engine *engine, t_floor *h, int y)
+{
+	int			x;
+	int			color;
+	t_texture	*tex;
+
+	x = 0;
+	while (x < SCREEN_WIDTH)
+	{
+		h->tx = (int)(64 * (h->floor_x - (int)h->floor_x)) & 63;
+		h->ty = (int)(64 * (h->floor_y - (int)h->floor_y)) & 63;
+
+		h->floor_x += h->step_x;
+		h->floor_y += h->step_y;
+		tex = engine->renderer->floor_texture;
+		if (tex)
+			color = renderer_get_pixel_color(tex, h->tx, h->ty);
+		else
+			color = engine->world->floor_color;
+		renderer_put_pixel(engine->renderer, x, y, color);
+		tex = engine->renderer->ceiling_texture;
+		if (tex)
+			color = renderer_get_pixel_color(tex, h->tx, h->ty);
+		else
+			color = engine->world->ceiling_color;
+		renderer_put_pixel(engine->renderer, x, SCREEN_HEIGHT - y - 1, color);
+		x++;
+	}
+}
+
+void	render_floor_ceiling(t_engine *engine)
+{
+	t_floor		h;
+	int			y;
+
+	y = SCREEN_HEIGHT / 2;
+	while (y < SCREEN_HEIGHT)
+	{
+		init_floor_row_math(engine, &h, y);
+		draw_scanline(engine, &h, y);
+		y++;
+	}
+}
+
+static void	draw_floor_ceiling_pixel(t_engine *engine, int x, int y, 
+									int tx, int ty)
+{
+	int			color;
+	t_texture	*tex;
+
+	tex = engine->renderer->floor_texture;
+	if (tex)
+		color = renderer_get_pixel_color(tex, tx, ty);
+	else
+		color = engine->world->floor_color;
+	renderer_put_pixel(engine->renderer, x, y, color);
+	tex = engine->renderer->ceiling_texture;
+	if (tex)
+		color = renderer_get_pixel_color(tex, tx, ty);
+	else
+		color = engine->world->ceiling_color;
+	renderer_put_pixel(engine->renderer, x, SCREEN_HEIGHT - y - 1, color);
 }
 
 void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,

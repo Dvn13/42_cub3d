@@ -97,11 +97,9 @@ $(OBJDIR_BONUS)/%.o: %.c
 
 clean:
 	rm -rf $(OBJDIR) $(OBJDIR_BONUS)
-	@make -C $(MLX_DIR) clean
 
 fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
-	@make -C $(MLX_DIR) fclean
 
 re: fclean all
 

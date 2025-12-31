@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/30 17:55:17 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 15:36:16 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GRAPHICS_H
 
 typedef struct s_renderer	t_renderer;
+typedef	struct s_floor		t_floor;
 
 struct			s_renderer
 {
@@ -25,6 +26,23 @@ struct			s_renderer
 	int			size_line;
 	int			endian;
 	t_texture	*textures[4];
+	t_texture	*floor_texture;
+	t_texture	*ceiling_texture;
+};
+
+typedef struct	s_floor
+{
+    float		ray_dir_x0;
+    float		ray_dir_y0;
+    float		ray_dir_x1;
+    float		ray_dir_y1;
+    float		row_dist;
+    float		step_x;
+    float		step_y;
+    float		floor_x;
+    float		floor_y;
+    int			tx;
+    int			ty;
 };
 
 void			render_minimap(t_engine *engine);

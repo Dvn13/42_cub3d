@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   world_parsing.c                                    :+:      :+:    :+:   */
+/*   world_parsing_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 18:14:59 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 13:26:30 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,32 @@ static int	parse_color_line(t_world *world, char *line)
 	}
 	free_string_array(tokens);
 	return (1);
+}
+int parse_floor_ceiling(t_world *world, char *line, char type)
+{
+    char	*trimmed;
+	int		color;
+
+    trimmed = trim_space(line);
+    if (ft_strnstr(trimmed, ".xpm", ft_strlen(trimmed)))
+    {
+        if (type == 'F')
+            world->floor_texture_path = ft_strdup(trimmed);
+        else if (type == 'C')
+            world->ceiling_texture_path = ft_strdup(trimmed);
+    }
+    else
+    {
+        color = parse_color_value(trimmed);
+        if (color == -1)
+			return (0);
+        if (type == 'F')
+            world->floor_color = color;
+        else if (type == 'C')
+            world->ceiling_color = color;
+    }
+    free(trimmed);
+    return (1);
 }
 
 int	world_parse_file(t_world *world, const char *filename)

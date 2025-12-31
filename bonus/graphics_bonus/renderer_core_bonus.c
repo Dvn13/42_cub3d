@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   renderer_core.c                                    :+:      :+:    :+:   */
+/*   renderer_core_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:21 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:18:22 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 13:28:52 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,29 @@ t_renderer	*renderer_create(void *mlx_ptr)
 	renderer->image_width = SCREEN_WIDTH;
 	renderer->image_height = SCREEN_HEIGHT;
 	return (renderer);
+}
+
+int load_bonus_textures(t_engine *engine)
+{
+    if (engine->world->floor_texture_path)
+    {
+        engine->renderer->floor_texture = texture_allocate();
+        if (!texture_load_from_file(engine->renderer->floor_texture, 
+            engine->mlx_ptr, engine->world->floor_texture_path))
+            return (0);
+    }
+    else
+        engine->renderer->floor_texture = NULL;
+    if (engine->world->ceiling_texture_path)
+    {
+        engine->renderer->ceiling_texture = texture_allocate();
+        if (!texture_load_from_file(engine->renderer->ceiling_texture, 
+            engine->mlx_ptr, engine->world->ceiling_texture_path))
+            return (0);
+    }
+    else
+        engine->renderer->ceiling_texture = NULL;
+    return (1);
 }
 
 void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)

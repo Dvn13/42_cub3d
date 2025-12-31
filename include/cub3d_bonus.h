@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/30 16:05:20 by gbodur           ###   ########.fr       */
+/*   Updated: 2025/12/31 15:35:59 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_engine		t_engine;
 typedef struct s_character	t_character;
 typedef struct s_world		t_world;
 typedef struct s_renderer	t_renderer;
+typedef	struct s_floor		t_floor;
 typedef struct s_texture	t_texture;
 typedef struct s_ray		t_ray;
 
