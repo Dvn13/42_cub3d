@@ -6,11 +6,29 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 13:21:26 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 15:28:59 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void interact_with_door(t_engine *engine)
+{
+    int target_x;
+    int target_y;
+    char cell;
+
+    target_x = (int)(engine->character->pos.x + engine->character->dir.x * 1.0);
+    target_y = (int)(engine->character->pos.y + engine->character->dir.y * 1.0);
+    if (target_x < 0 || target_x >= engine->world->width ||
+        target_y < 0 || target_y >= engine->world->height)
+        return;
+    cell = world_get_cell(engine->world, target_x, target_y);
+    if (cell == 'D')
+        engine->world->grid[target_y][target_x] = 'O';
+    else if (cell == 'O')
+        engine->world->grid[target_y][target_x] = 'D';
+}
 
 int	handle_key_press(int keycode, t_engine *engine)
 {
@@ -26,6 +44,8 @@ int	handle_key_press(int keycode, t_engine *engine)
 		engine->key_s = 1;
 	else if (keycode == KEY_D)
 		engine->key_d = 1;
+	else if (keycode == KEY_E)
+		interact_with_door(engine);
 	else if (keycode == KEY_M)
 		mouse_toggle(engine);
 	else if (keycode == KEY_LEFT)

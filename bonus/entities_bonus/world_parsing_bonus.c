@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 20:58:48 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 15:25:59 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_config_line(char *str, int i)
 	if (!str[i] || str[i] == '\n')
 		return (0);
 	if (str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E'
-		|| str[i] == 'F' || str[i] == 'C')
+		|| str[i] == 'F' || str[i] == 'C' || str[i] == 'D' || str[i] == 'D')
 		return (1);
 	return (0);
 }
@@ -165,6 +165,17 @@ static int	parse_texture_line(t_world *world, char *line)
 		}
 		world->east_texture_path = duplicate_string(tokens[1]);
 	}
+	else if (compare_strings(tokens[0], "DO") == 0
+		|| compare_strings(tokens[0], "D") == 0)
+    {
+        if (world->door_texture_path)
+        {
+            free_string_array(tokens);
+            report_error("Duplicate texture (DO)");
+            return (0);
+        }
+        world->door_texture_path = duplicate_string(tokens[1]);
+    }
 	else
 	{
 		free_string_array(tokens);

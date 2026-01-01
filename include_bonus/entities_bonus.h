@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 20:47:49 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 14:04:55 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ struct						s_world
 	char					*west_texture_path;
 	char					*floor_texture_path;
 	char					*ceiling_texture_path;
+	char					*door_texture_path;
 	int						floor_color;
 	int						ceiling_color;
 	int						character_count;

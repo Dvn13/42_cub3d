@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 22:18:41 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 15:22:55 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ void	render_floor_ceiling(t_engine *engine)
 
 void	render_walls(t_engine *engine)
 {
-	t_ray	ray;
-	int		x;
+	t_ray		ray;
+	t_texture	*tex;
+	char		cell_type;
+	int			x;
 
 	if (!engine || !engine->character || !engine->world || !engine->renderer)
 		return ;
@@ -113,8 +115,12 @@ void	render_walls(t_engine *engine)
 		ray_trace_calculate_wall_distance(&ray, engine->character);
 		ray_trace_calculate_draw_limits(&ray);
 		ray_trace_calculate_wall_x(&ray, engine->character);
-		render_vertical_line(engine->renderer, x, &ray,
-			engine->renderer->textures[ray_trace_get_texture_index(&ray)]);
+		cell_type = world_get_cell(engine->world, ray.map_x, ray.map_y);
+		if (cell_type == 'D')
+            tex = engine->renderer->door_texture;
+        else
+            tex = engine->renderer->textures[ray_trace_get_texture_index(&ray)];
+		render_vertical_line(engine->renderer, x, &ray, tex);
 		x++;
 	}
 }

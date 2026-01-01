@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 22:52:06 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 14:03:21 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct			s_renderer
 	t_texture	*textures[4];
 	t_texture	*floor_texture;
 	t_texture	*ceiling_texture;
+	t_texture	*door_texture;
 };
 
 struct	s_floor

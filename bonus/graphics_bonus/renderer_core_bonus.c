@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:21 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 13:28:52 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/01 15:27:14 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,20 @@ int load_bonus_textures(t_engine *engine)
             return (0);
     }
     else
-        engine->renderer->ceiling_texture = NULL;
+		engine->renderer->ceiling_texture = NULL;
+	if (!engine->world->door_texture_path )
+	{
+		engine->world->door_texture_path
+			= duplicate_string("./assets/textures/door.xpm");
+		if (!engine->world->door_texture_path)
+            return (0);
+	}
+	engine->renderer->door_texture = texture_allocate();
+	if (!engine->renderer->door_texture)
+        return (0);
+	if (!texture_load_from_file(engine->renderer->door_texture,
+		engine->mlx_ptr, engine->world->door_texture_path))
+		return (0);
     return (1);
 }
 
