@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:13:53 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 16:35:54 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,15 @@ static int	check_textures_loaded(t_world *world)
 static int	check_floor_ceiling_set(t_world *world)
 {
 	if (world->floor_color == -1 && world->floor_texture_path == NULL)
-		return (report_error("Missing Floor specification (F: Color or Texture)"));
+	{
+		report_error("Missing Floor specification (F: Color or Texture)");
+		return (0);
+	}
 	if (world->ceiling_color == -1 && world->ceiling_texture_path == NULL)
-		return (report_error("Missing Ceiling specification (C: Color or Texture)"));
+	{
+		report_error("Missing Ceiling specification(C: Color or Texture)");
+		return (0);
+	}
 	return (1);
 }
 
@@ -205,6 +211,6 @@ int	world_validate(t_world *world)
 	if (!check_player_exists(world))
 		return (0);
 	if (!check_map_closed(world))
-		return (report_error("Map is not closed / surrounded by walls"));	
+		return (report_error("Map is not closed / surrounded by walls"));
 	return (1);
 }

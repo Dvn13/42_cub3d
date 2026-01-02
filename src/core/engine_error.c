@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:05:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 14:41:25 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:12:33 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	error_handler(char *message, int error_code)
 	exit(error_code);
 }
 
-int		report_error(char *message)
+int	report_error(char *message)
 {
 	write(STDERR_FILENO, "Error\n", 6);
 	if (message)
@@ -30,17 +30,10 @@ int		report_error(char *message)
 	return (0);
 }
 
-void	cleanup_engine(t_engine *engine)
+static void	cleanup_renderer_resources(t_engine *engine)
 {
 	int	i;
 
-	if (!engine)
-		return ;
-	if (engine->world)
-	{
-		world_destroy(engine->world);
-		engine->world = NULL;
-	}
 	if (engine->renderer && engine->mlx_ptr)
 	{
 		i = 0;
@@ -52,8 +45,10 @@ void	cleanup_engine(t_engine *engine)
 		}
 		renderer_destroy(engine->renderer, engine->mlx_ptr);
 	}
-	if (engine->character)
-		character_destroy(engine->character);
+}
+
+static void	cleanup_mlx_resources(t_engine *engine)
+{
 	if (engine->win_ptr && engine->mlx_ptr)
 		mlx_destroy_window(engine->mlx_ptr, engine->win_ptr);
 	if (engine->mlx_ptr)
@@ -61,6 +56,20 @@ void	cleanup_engine(t_engine *engine)
 		mlx_destroy_display(engine->mlx_ptr);
 		free(engine->mlx_ptr);
 	}
+}
+
+void	cleanup_engine(t_engine *engine)
+{
+	if (!engine)
+		return ;
+	if (engine->world)
+	{
+		world_destroy(engine->world);
+		engine->world = NULL;
+	}
+	if (engine->character)
+		character_destroy(engine->character);
+	cleanup_renderer_resources(engine);
+	cleanup_mlx_resources(engine);
 	safe_free(engine);
 }
- 

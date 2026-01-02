@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:25 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:16:19 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:13:32 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,99 +60,108 @@ static void	sort_sprites(t_sprite *sprites, int count)
 	}
 }
 
+static void	calc_sprite_transform(t_engine *eng, t_sprite *spr,
+				t_spr_calc *calc)
+{
+	double	sprite_x;
+	double	sprite_y;
+	double	inv_det;
+
+	sprite_x = spr->x - eng->character->pos.x;
+	sprite_y = spr->y - eng->character->pos.y;
+	inv_det = 1.0 / (eng->character->plane.x * eng->character->dir.y
+			- eng->character->dir.x * eng->character->plane.y);
+	calc->transform_x = inv_det * (eng->character->dir.y * sprite_x
+			- eng->character->dir.x * sprite_y);
+	calc->transform_y = inv_det * (-eng->character->plane.y * sprite_x
+			+ eng->character->plane.x * sprite_y);
+	calc->screen_x = (int)((SCREEN_WIDTH / 2) * (1 + calc->transform_x
+				/ calc->transform_y));
+}
+
+static void	calc_sprite_dims(t_spr_calc *calc)
+{
+	calc->height = abs((int)(SCREEN_HEIGHT / calc->transform_y)) / 2;
+	calc->draw_start_y = -calc->height / 2 + SCREEN_HEIGHT / 2;
+	if (calc->draw_start_y < 0)
+		calc->draw_start_y = 0;
+	calc->draw_end_y = calc->height / 2 + SCREEN_HEIGHT / 2;
+	if (calc->draw_end_y >= SCREEN_HEIGHT)
+		calc->draw_end_y = SCREEN_HEIGHT - 1;
+	calc->width = abs((int)(SCREEN_HEIGHT / calc->transform_y)) / 2;
+	calc->draw_start_x = -calc->width / 2 + calc->screen_x;
+	if (calc->draw_start_x < 0)
+		calc->draw_start_x = 0;
+	calc->draw_end_x = calc->width / 2 + calc->screen_x;
+	if (calc->draw_end_x >= SCREEN_WIDTH)
+		calc->draw_end_x = SCREEN_WIDTH - 1;
+}
+
+static void	draw_sprite_stripe(t_engine *eng, t_spr_calc *spr_calc, int stripe,
+	int tex_x)
+{
+	int			y;
+	int			d;
+	int			tex_y;
+	int			color;
+	t_texture	*tex;
+
+	y = spr_calc->draw_start_y;
+	tex = eng->renderer->sprite_textures[eng->world->current_sprite_frame];
+	while (y < spr_calc->draw_end_y)
+	{
+		d = (y) * 256 - SCREEN_HEIGHT * 128 + spr_calc->height * 128;
+		tex_y = ((d * tex->height) / spr_calc->height) / 256;
+		color = renderer_get_pixel_color(tex, tex_x, tex_y);
+		if ((color & 0x00FFFFFF) != 0)
+			renderer_put_pixel(eng->renderer, stripe, y, color);
+		y++;
+	}
+}
+
+static void	process_sprites(t_engine *eng)
+{
+	t_spr_calc		spr_calc;
+	int				i;
+	int				stripe;
+	int				tex_x;
+	t_texture		*tex;
+
+	i = -1;
+	tex = eng->renderer->sprite_textures[eng->world->current_sprite_frame];
+	while (++i < eng->world->sprite_count)
+	{
+		calc_sprite_transform(eng, &eng->world->sprites[i], &spr_calc);
+		calc_sprite_dims(&spr_calc);
+		stripe = spr_calc.draw_start_x;
+		while (stripe < spr_calc.draw_end_x)
+		{
+			tex_x = (int)(256 * (stripe - (-spr_calc.width / 2 + spr_calc.screen_x))
+					* tex->width / spr_calc.width) / 256;
+			if (spr_calc.transform_y > 0 && stripe > 0 && stripe < SCREEN_WIDTH
+				&& spr_calc.transform_y < eng->renderer->z_buffer[stripe])
+				draw_sprite_stripe(eng, &spr_calc, stripe, tex_x);
+			stripe++;
+		}
+	}
+}
+
 void	render_sprites(t_engine *engine)
 {
-	int			i;
-	t_sprite	*sprite;
-	double		sprite_x;
-	double		sprite_y;
-	double		inv_det;
-	double		transform_x;
-	double		transform_y;
-	int			sprite_screen_x;
-	int			sprite_height;
-	int			draw_start_y;
-	int			draw_end_y;
-	int			sprite_width;
-	int			draw_start_x;
-	int			draw_end_x;
-	int			stripe;
-	int			tex_x;
-	int			tex_y;
-	int			d;
-	int			color;
-	int			y;
-	t_texture	*tex;
+	int	i;
 
 	i = 0;
 	while (i < engine->world->sprite_count)
 	{
 		engine->world->sprites[i].dist = ((engine->character->pos.x
-					- engine->world->sprites[i].x) * (engine->character->pos.x
-					- engine->world->sprites[i].x) + (engine->character->pos.y
-					- engine->world->sprites[i].y) * (engine->character->pos.y
-					- engine->world->sprites[i].y));
+					- engine->world->sprites[i].x)
+				* (engine->character->pos.x - engine->world->sprites[i].x)
+				+ (engine->character->pos.y - engine->world->sprites[i].y)
+				* (engine->character->pos.y - engine->world->sprites[i].y));
 		i++;
 	}
 	sort_sprites(engine->world->sprites, engine->world->sprite_count);
-	i = 0;
-	while (i < engine->world->sprite_count)
-	{
-		sprite = &engine->world->sprites[i];
-		sprite_x = sprite->x - engine->character->pos.x;
-		sprite_y = sprite->y - engine->character->pos.y;
-		inv_det = 1.0 / (engine->character->plane.x * engine->character->dir.y
-				- engine->character->dir.x * engine->character->plane.y);
-		transform_x = inv_det * (engine->character->dir.y * sprite_x
-				- engine->character->dir.x * sprite_y);
-		transform_y = inv_det * (-engine->character->plane.y * sprite_x
-				+ engine->character->plane.x * sprite_y);
-		sprite_screen_x = (int)((SCREEN_WIDTH / 2) * (1 + transform_x
-					/ transform_y));
-		sprite_height = abs((int)(SCREEN_HEIGHT / (transform_y))) / 2;
-		draw_start_y = -sprite_height / 2 + SCREEN_HEIGHT / 2;
-		if (draw_start_y < 0)
-			draw_start_y = 0;
-		draw_end_y = sprite_height / 2 + SCREEN_HEIGHT / 2;
-		if (draw_end_y >= SCREEN_HEIGHT)
-			draw_end_y = SCREEN_HEIGHT - 1;
-		sprite_width = abs((int)(SCREEN_HEIGHT / (transform_y))) / 2;
-		draw_start_x = -sprite_width / 2 + sprite_screen_x;
-		if (draw_start_x < 0)
-			draw_start_x = 0;
-		draw_end_x = sprite_width / 2 + sprite_screen_x;
-		if (draw_end_x >= SCREEN_WIDTH)
-			draw_end_x = SCREEN_WIDTH - 1;
-		stripe = draw_start_x;
-		while (stripe < draw_end_x)
-		{
-			tex_x = (int)(256 * (stripe - (-sprite_width / 2 + sprite_screen_x))
-					* engine->renderer->sprite_textures[0]->width
-					/ sprite_width) / 256;
-			if (transform_y > 0 && stripe > 0 && stripe < SCREEN_WIDTH
-				&& transform_y < engine->renderer->z_buffer[stripe])
-			{
-				y = draw_start_y;
-				while (y < draw_end_y)
-				{
-					d = (y)*256 - SCREEN_HEIGHT * 128 + sprite_height * 128;
-					tex_y = ((d * engine->renderer->sprite_textures[0]->height)
-							/ sprite_height) / 256;
-					tex = engine->renderer->sprite_textures[engine->world->current_sprite_frame];
-					if (tex)
-					{
-						color = renderer_get_pixel_color(tex, tex_x, tex_y);
-						if ((color & 0x00FFFFFF) != 0)
-							renderer_put_pixel(engine->renderer, stripe, y,
-								color);
-					}
-					y++;
-				}
-			}
-			stripe++;
-		}
-		i++;
-	}
+	process_sprites(engine);
 }
 
 void	render_frame(t_engine *engine)

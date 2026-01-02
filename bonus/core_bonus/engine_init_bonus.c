@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:31:30 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 13:27:47 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 16:28:40 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	initialize_character_and_renderer(t_engine *engine)
 	if (!load_all_textures(engine->renderer, engine->world, engine->mlx_ptr))
 		return (report_error("Texture loading failed"));
 	if (!load_bonus_textures(engine))
-    	return (report_error("Failed to load bonus textures"));
+		return (report_error("Failed to load bonus textures"));
 	return (1);
 }
 

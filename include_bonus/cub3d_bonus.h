@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:21:04 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:05:28 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define WINDOW_TITLE "cub3D - 3D"
+# define M_PI 3.14159265358979323846
 
 # define CELL_SIZE 64
 # define FIELD_OF_VIEW 66
@@ -81,6 +82,7 @@ typedef struct s_renderer	t_renderer;
 typedef	struct s_floor		t_floor;
 typedef struct s_texture	t_texture;
 typedef struct s_ray		t_ray;
+typedef struct s_spr_calc	t_spr_calc;
 
 struct						s_engine
 {

@@ -20,11 +20,16 @@ SOURCES = src/main.c \
 		  src/core/engine_init.c \
 		  src/core/engine_error.c \
 		  src/entities/character.c \
+		  src/entities/file_content.c \
+		  src/entities/map_check.c \
+		  src/entities/map_layout.c \
 		  src/entities/texture.c \
+		  src/entities/world_creation.c \
 		  src/entities/world.c \
 		  src/entities/world_parsing.c \
 		  src/entities/world_utils.c \
 		  src/entities/world_validation.c \
+		  src/entities/world_view_parsing.c \
 		  src/graphics/ray_tracer.c \
 		  src/graphics/ray_calculation.c \
 		  src/graphics/renderer.c \
@@ -32,6 +37,7 @@ SOURCES = src/main.c \
 		  src/graphics/render_drawing.c \
 		  src/input/keyboard.c \
 		  src/input/mouse.c \
+		  src/input/movement_process.c \
 		  src/input/movement.c \
 		  src/input/rotation.c \
 		  src/input/collision.c \
@@ -43,8 +49,8 @@ SOURCES = src/main.c \
 
 BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/core_bonus/engine_bonus.c \
-				bonus/core_bonus/engine_init_bonus.c \
 				bonus/core_bonus/engine_error_bonus.c \
+				bonus/core_bonus/engine_init_bonus.c \
 				bonus/entities_bonus/character_bonus.c \
 				bonus/entities_bonus/texture_bonus.c \
 				bonus/entities_bonus/world_bonus.c \

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   world_bonus.c                                      :+:      :+:    :+:   */
+/*   world_creation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 16:40:43 by gbodur           ###   ########.fr       */
+/*   Created: 2026/01/02 17:43:32 by gbodur            #+#    #+#             */
+/*   Updated: 2026/01/02 17:44:07 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d_bonus.h"
+#include "cub3d.h"
 
 t_world	*world_create(void)
 {
@@ -26,34 +26,10 @@ t_world	*world_create(void)
 	world->south_texture_path = NULL;
 	world->east_texture_path = NULL;
 	world->west_texture_path = NULL;
-	world->floor_color = 0x473E37;
-	world->ceiling_color = 0xD8E3E7;
+	world->floor_color = -1;
+	world->ceiling_color = -1;
 	world->character_count = 0;
-	world->floor_texture_path = NULL;
-	world->ceiling_texture_path = NULL;
-	world->door_texture_path = NULL;
 	return (world);
-}
-
-int	world_is_wall(t_world *world, int x, int y)
-{
-	char	cell;
-
-	if (!world || !world->grid || x < 0 || y < 0 || x >= world->width
-		|| y >= world->height)
-		return (1);
-	cell = world->grid[y][x];
-	if (cell == '1' || cell == 'D')
-		return (1);
-	return (0);
-}
-
-char	world_get_cell(t_world *world, int x, int y)
-{
-	if (!world || !world->grid || x < 0 || y < 0 || x >= world->width
-		|| y >= world->height)
-		return (' ');
-	return (world->grid[y][x]);
 }
 
 void	world_destroy(t_world *world)
@@ -81,13 +57,5 @@ void	world_destroy(t_world *world)
 		safe_free(world->east_texture_path);
 	if (world->west_texture_path)
 		safe_free(world->west_texture_path);
-	if (world->ceiling_texture_path)
-		safe_free(world->ceiling_texture_path);
-	if (world->floor_texture_path)
-		safe_free(world->floor_texture_path);
-	if (world->door_texture_path)
-		safe_free(world->door_texture_path);
-	if (world->sprites)
-		safe_free(world->sprites);
 	safe_free(world);
 }

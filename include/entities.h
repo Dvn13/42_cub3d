@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 13:22:13 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:27:37 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,16 @@ void						character_set_orientation(t_character *character,
 								char orientation);
 void						character_destroy(t_character *character);
 
+char						*read_file_content(const char *filename);
+
+void						copy_map_data(char **lines, int start_index,
+								t_world *world);
+								
+int							validate_map_layout(char *content);
+
+int							parse_color_line(t_world *world, char *line);
+int							parse_texture_line(t_world *world, char *line);
+
 t_world						*world_create(void);
 int							world_parse_file(t_world *world,
 								const char *filename);
@@ -118,7 +128,4 @@ int							parse_color_value(char *color_str);
 int							is_map_line(char *line);
 void						parse_map_dimensions(char **lines, int start_index,
 								t_world *world);
-void						copy_map_data(char **lines, int start_index,
-								t_world *world);
-
 #endif

@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 15:25:59 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 16:41:36 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,15 +167,15 @@ static int	parse_texture_line(t_world *world, char *line)
 	}
 	else if (compare_strings(tokens[0], "DO") == 0
 		|| compare_strings(tokens[0], "D") == 0)
-    {
-        if (world->door_texture_path)
-        {
-            free_string_array(tokens);
-            report_error("Duplicate texture (DO)");
-            return (0);
-        }
-        world->door_texture_path = duplicate_string(tokens[1]);
-    }
+	{
+		if (world->door_texture_path)
+		{
+			free_string_array(tokens);
+			report_error("Duplicate texture (DO)");
+			return (0);
+		}
+		world->door_texture_path = duplicate_string(tokens[1]);
+	}
 	else
 	{
 		free_string_array(tokens);
@@ -230,10 +230,10 @@ static int	has_extension(char *str, char *ext)
 			return (1);
 		i++;
 	}
-    if (str_len >= 4 && str[str_len - 4] == '.' &&  str[str_len - 3] == 'x'
-			&& str[str_len - 2] == 'p' && str[str_len - 1] == 'm')
+	if (str_len >= 4 && str[str_len - 4] == '.' && str[str_len - 3] == 'x'
+		&& str[str_len - 2] == 'p' && str[str_len - 1] == 'm')
 	{
-        return (1);
+		return (1);
 	}
 	return (0);
 }
@@ -251,13 +251,14 @@ static int	parse_color_or_texture(t_world *world, char *line)
 		free_string_array(tokens);
 		return (0);
 	}
-	if (compare_strings(tokens[0], "F") != 0 && compare_strings(tokens[0], "C") != 0)
+	if (compare_strings(tokens[0], "F") != 0
+		&& compare_strings(tokens[0], "C") != 0)
 	{
 		free_string_array(tokens);
 		return (0);
 	}
 	type = tokens[0][0];
-    trimmed_val = trim_space(tokens[1]);
+	trimmed_val = trim_space(tokens[1]);
 	if (has_extension(trimmed_val, ".xpm"))
 	{
 		if (type == 'F')
@@ -335,8 +336,8 @@ int	world_parse_file(t_world *world, const char *filename)
 		}
 		else
 		{
-			if (!parse_texture_line(world, lines[i]) && 
-				!parse_color_or_texture(world, lines[i]))
+			if (!parse_texture_line(world, lines[i])
+				&& !parse_color_or_texture(world, lines[i]))
 			{
 				free_string_array(lines);
 				report_error("Invalid line or character found in map file");

@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:12:40 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 16:37:18 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	count_commas(const char *str)
 	}
 	return (count);
 }
+
 static int	is_str_digit(char *str)
 {
 	int	i;
@@ -78,6 +79,7 @@ static int	is_str_digit(char *str)
 	}
 	return (1);
 }
+
 int	parse_color_value(char *color_str)
 {
 	char	**rgb_values;
@@ -96,7 +98,7 @@ int	parse_color_value(char *color_str)
 		return (-1);
 	}
 	if (!is_str_digit(rgb_values[0]) || !is_str_digit(rgb_values[1])
-        || !is_str_digit(rgb_values[2]))
+		|| !is_str_digit(rgb_values[2]))
 	{
 		free_string_array(rgb_values);
 		return (-1);
@@ -122,7 +124,7 @@ int	is_map_line(char *line)
 	{
 		if (line[i] != '0' && line[i] != '1' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
-			&& line[i] != 'D' && line[i] != 'O' &&  line[i] != ' '
+			&& line[i] != 'D' && line[i] != 'O' && line[i] != ' '
 			&& line[i] != '\n' && line[i] != SPRITE_CHAR)
 			return (0);
 		i++;

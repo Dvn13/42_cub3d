@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:26:27 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:03:32 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ struct			s_renderer
 	t_texture	*ceiling_texture;
 	t_texture	*door_texture;
 };
+
+typedef struct	s_spr_calc
+{
+	double		transform_x;
+    double		transform_y;
+    int			screen_x;
+    int			height;
+    int			width;
+    int			draw_start_y;
+    int			draw_end_y;
+    int			draw_start_x;
+    int			draw_end_x;
+}				t_spr_calc;
 
 struct			s_floor
 {

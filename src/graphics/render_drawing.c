@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:37:34 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:40:53 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,25 @@ void	render_floor_ceiling(t_engine *engine)
 	}
 }
 
+static int	calc_texture_x(t_ray *ray, t_texture *texture)
+{
+	int	tex_x;
+
+	tex_x = (int)(ray->wall_x * (double)texture->width);
+	if ((ray->side == 0 && ray->ray_dir_x > 0)
+		|| (ray->side == 1 && ray->ray_dir_y < 0))
+		tex_x = texture->width - tex_x - 1;
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= texture->width)
+		tex_x = texture->width - 1;
+	return (tex_x);
+}
+
 void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 		t_texture *texture)
 {
 	int		y;
-	int		color;
 	int		tex_x;
 	int		tex_y;
 	double	step;
@@ -71,15 +85,7 @@ void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 
 	if (!renderer || !ray || !texture)
 		return ;
-	tex_x = (int)(ray->wall_x * (double)texture->width);
-	if (ray->side == 0 && ray->ray_dir_x > 0)
-		tex_x = texture->width - tex_x - 1;
-	if (ray->side == 1 && ray->ray_dir_y < 0)
-		tex_x = texture->width - tex_x - 1;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= texture->width)
-		tex_x = texture->width - 1;
+	tex_x = calc_texture_x(ray, texture);
 	step = 1.0 * texture->height / ray->line_height;
 	tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2
 			+ ray->line_height / 2) * step;
@@ -92,8 +98,8 @@ void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 			tex_y = 0;
 		if (tex_y >= texture->height)
 			tex_y = texture->height - 1;
-		color = renderer_get_pixel_color(texture, tex_x, tex_y);
-		renderer_put_pixel(renderer, x, y, color);
+		renderer_put_pixel(renderer, x, y,
+			renderer_get_pixel_color(texture, tex_x, tex_y));
 		y++;
 	}
 }

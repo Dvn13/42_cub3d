@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 13:57:26 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 13:57:27 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:16:47 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,15 @@ static char	*extract_word(const char *s, int start, int end)
 	return (word);
 }
 
-char	**split_string(char const *s, char c)
+static int	fill_split_array(char **result, char const *s, char c, int count)
 {
-	char	**result;
-	int		word_count;
-	int		i;
-	int		j;
-	int		start;
+	int	i;
+	int	j;
+	int	start;
 
-	if (!s)
-		return (NULL);
-	word_count = count_words(s, c);
-	result = safe_calloc(word_count + 1, sizeof(char *));
-	if (!result)
-		return (NULL);
 	i = 0;
 	j = 0;
-	while (j < word_count)
+	while (j < count)
 	{
 		while (s[i] == c)
 			i++;
@@ -67,10 +59,26 @@ char	**split_string(char const *s, char c)
 		if (!result[j])
 		{
 			free_string_array(result);
-			return (NULL);
+			return (0);
 		}
 		j++;
 	}
+	return (1);
+}
+
+char	**split_string(char const *s, char c)
+{
+	char	**result;
+	int		word_count;
+
+	if (!s)
+		return (NULL);
+	word_count = count_words(s, c);
+	result = safe_calloc(word_count + 1, sizeof(char *));
+	if (!result)
+		return (NULL);
+	if (!fill_split_array(result, s, c, word_count))
+		return (NULL);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 15:34:59 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 14:41:04 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:16:11 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	validate_command_line_arguments(int argc, char **argv)
 	return (1);
 }
 
-
 int	main(int argc, char **argv)
 {
 	t_engine	*engine;
@@ -41,7 +40,7 @@ int	main(int argc, char **argv)
 		return (1);
 	engine = safe_calloc(1, sizeof(t_engine));
 	if (!engine)
-		return(report_error("Memory allocation failed"));
+		return (report_error("Memory allocation failed"));
 	if (!engine_initialize(engine, argv[1]))
 	{
 		cleanup_engine(engine);

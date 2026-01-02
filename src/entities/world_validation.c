@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:31:50 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:46:39 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,39 +62,52 @@ static int	flood_fill(t_world *world, char **map, int x, int y)
 	return (1);
 }
 
+static int	find_and_check_player(t_world	*world, char **map_copy, int *x,
+	int *y)
+{
+	int	player_found;
+	int	row;
+	int	col;
+
+	player_found = 0;
+	row = 0;
+	while (row < world->height && !player_found)
+	{
+		col = 0;
+		while (map_copy[row][col])
+		{
+			if (map_copy[row][col] == 'N' || map_copy[row][col] == 'S' ||
+				map_copy[row][col] == 'E' || map_copy[row][col] == 'W')
+			{
+				*x = col;
+				*y = row;
+				player_found = 1;
+				break ;
+			}
+			col++;
+		}
+		if (!player_found)
+			row++;
+	}
+	return (player_found);
+}
+
 int	check_map_closed(t_world *world)
 {
 	char	**map_copy;
 	int		x;
 	int		y;
-	int		player_found;
+	int		is_valid;
 
 	map_copy = duplicate_map(world);
 	if (!map_copy)
 		return (0);
-	player_found = 0;
-	y = 0;
-	while (y < world->height && !player_found)
+	is_valid = 0;
+	if (find_and_check_player(world, map_copy, &x, &y))
 	{
-		x = 0;
-		while (map_copy[y][x])
-		{
-			if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S' ||
-				map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
-			{
-				player_found = 1;
-				break ;
-			}
-			x++;
-		}
-		if (!player_found)
-			y++;
-	}
-	if (!player_found || !flood_fill(world, map_copy, x, y))
-	{
-		free_string_array(map_copy);
-		return (0);
+		if (flood_fill(world, map_copy, x, y))
+			is_valid = 1;
 	}
 	free_string_array(map_copy);
-	return (1);
+	return (is_valid);
 }

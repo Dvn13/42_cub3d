@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/29 13:42:12 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 17:15:22 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SCREEN_WIDTH 1024
 # define SCREEN_HEIGHT 768
 # define WINDOW_TITLE "cub3D - 3D"
+# define M_PI 3.14159265358979323846
 
 # define CELL_SIZE 64
 # define FIELD_OF_VIEW 66
