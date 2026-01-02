@@ -6,68 +6,13 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 16:35:54 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 20:01:38 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-static void	count_map_players(t_world *world)
-{
-	int	i;
-	int	j;
-
-	world->character_count = 0;
-	i = 0;
-	while (i < world->height)
-	{
-		j = 0;
-		while (world->grid[i][j])
-		{
-			if (world->grid[i][j] == 'N' || world->grid[i][j] == 'S' ||
-				world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
-			{
-				world->character_count++;
-			}
-			else if (world->grid[i][j] == SPRITE_CHAR)
-			{
-				world->sprite_count++;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-static int	check_textures_loaded(t_world *world)
-{
-	if (!world->north_texture_path)
-		return (report_error("Missing North texture (NO)"));
-	if (!world->south_texture_path)
-		return (report_error("Missing South texture (SO)"));
-	if (!world->west_texture_path)
-		return (report_error("Missing West texture (WE)"));
-	if (!world->east_texture_path)
-		return (report_error("Missing East texture (EA)"));
-	return (1);
-}
-
-static int	check_floor_ceiling_set(t_world *world)
-{
-	if (world->floor_color == -1 && world->floor_texture_path == NULL)
-	{
-		report_error("Missing Floor specification (F: Color or Texture)");
-		return (0);
-	}
-	if (world->ceiling_color == -1 && world->ceiling_texture_path == NULL)
-	{
-		report_error("Missing Ceiling specification(C: Color or Texture)");
-		return (0);
-	}
-	return (1);
-}
-
-static int	check_player_exists(t_world *world)
+int	check_player_exists(t_world *world)
 {
 	if (world->character_count == 0)
 		return (report_error("Map missing player start position (N,S,E,W)"));
@@ -99,7 +44,7 @@ static char	**duplicate_map(t_world *world)
 	return (map_copy);
 }
 
-static int	flood_fill(t_world *world, char **map, int x, int y)
+int	flood_fill(t_world *world, char **map, int x, int y)
 {
 	int	rows;
 	int	cols;
@@ -126,91 +71,47 @@ static int	flood_fill(t_world *world, char **map, int x, int y)
 	return (1);
 }
 
+static int	find_start_pos(char **map, int *x, int *y)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	while (map[row])
+	{
+		col = 0;
+		while (map[row][col])
+		{
+			if (map[row][col] == 'N' || map[row][col] == 'S' ||
+				map[row][col] == 'E' || map[row][col] == 'W')
+			{
+				*x = col;
+				*y = row;
+				return (1);
+			}
+			col++;
+		}
+		row++;
+	}
+	return (0);
+}
+
 int	check_map_closed(t_world *world)
 {
 	char	**map_copy;
 	int		x;
 	int		y;
-	int		player_found;
+	int		is_valid;
 
 	map_copy = duplicate_map(world);
 	if (!map_copy)
 		return (0);
-	player_found = 0;
-	y = 0;
-	while (y < world->height && !player_found)
+	is_valid = 0;
+	if (find_start_pos(map_copy, &x, &y))
 	{
-		x = 0;
-		while (map_copy[y][x])
-		{
-			if (map_copy[y][x] == 'N' || map_copy[y][x] == 'S' ||
-				map_copy[y][x] == 'E' || map_copy[y][x] == 'W')
-			{
-				player_found = 1;
-				break ;
-			}
-			x++;
-		}
-		if (!player_found)
-			y++;
-	}
-	if (!player_found || !flood_fill(world, map_copy, x, y))
-	{
-		free_string_array(map_copy);
-		return (0);
+		if (flood_fill(world, map_copy, x, y))
+			is_valid = 1;
 	}
 	free_string_array(map_copy);
-	return (1);
-}
-
-static int	init_sprite_positions(t_world *world)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	if (world->sprite_count == 0)
-		return (1);
-	world->sprites = malloc(sizeof(t_sprite) * world->sprite_count);
-	if (!world->sprites)
-		return (report_error("Memory allocation for sprites failed"));
-	i = 0;
-	k = 0;
-	while (i < world->height)
-	{
-		j = 0;
-		while (world->grid[i][j])
-		{
-			if (world->grid[i][j] == SPRITE_CHAR)
-			{
-				world->sprites[k].x = j + 0.5;
-				world->sprites[k].y = i + 0.5;
-				world->sprites[k].texture_id = 0;
-				world->sprites[k].dist = 0;
-				world->grid[i][j] = '0';
-				k++;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	world_validate(t_world *world)
-{
-	if (!world || !world->grid)
-		return (report_error("Map data is missing or empty"));
-	count_map_players(world);
-	if (!init_sprite_positions(world))
-		return (0);
-	if (!check_textures_loaded(world))
-		return (0);
-	if (!check_floor_ceiling_set(world))
-		return (0);
-	if (!check_player_exists(world))
-		return (0);
-	if (!check_map_closed(world))
-		return (report_error("Map is not closed / surrounded by walls"));
-	return (1);
+	return (is_valid);
 }

@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:27:07 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 16:30:54 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:56:54 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,51 @@ t_character	*character_allocate(void)
 	return (character);
 }
 
-void	character_set_orientation(t_character *character, char orientation)
+static void	set_east_west_orientation(t_character *character, char orientation,
+	double plane_len)
 {
-	double	fov_radians;
-
-	if (!character)
-		return ;
-	character->spawn_orientation = orientation;
-	fov_radians = (FIELD_OF_VIEW * M_PI) / 180.0;
-	if (orientation == 'N')
-	{
-		character->dir.x = 0.0;
-		character->dir.y = -1.0;
-		character->plane.x = tan(fov_radians / 2.0);
-		character->plane.y = 0.0;
-	}
-	else if (orientation == 'S')
-	{
-		character->dir.x = 0.0;
-		character->dir.y = 1.0;
-		character->plane.x = -tan(fov_radians / 2.0);
-		character->plane.y = 0.0;
-	}
-	else if (orientation == 'E')
+	if (orientation == 'E')
 	{
 		character->dir.x = 1.0;
 		character->dir.y = 0.0;
 		character->plane.x = 0.0;
-		character->plane.y = tan(fov_radians / 2.0);
+		character->plane.y = plane_len;
 	}
 	else if (orientation == 'W')
 	{
 		character->dir.x = -1.0;
 		character->dir.y = 0.0;
 		character->plane.x = 0.0;
-		character->plane.y = -tan(fov_radians / 2.0);
+		character->plane.y = -plane_len;
 	}
+}
+
+void	character_set_orientation(t_character *character, char orientation)
+{
+	double	fov_radians;
+	double	plane_len;
+
+	if (!character)
+		return ;
+	character->spawn_orientation = orientation;
+	fov_radians = (FIELD_OF_VIEW * M_PI) / 180.0;
+	plane_len = tan(fov_radians / 2.0);
+	if (orientation == 'N')
+	{
+		character->dir.x = 0.0;
+		character->dir.y = -1.0;
+		character->plane.x = plane_len;
+		character->plane.y = 0.0;
+	}
+	else if (orientation == 'S')
+	{
+		character->dir.x = 0.0;
+		character->dir.y = 1.0;
+		character->plane.x = -plane_len;
+		character->plane.y = 0.0;
+	}
+	else
+		set_east_west_orientation(character, orientation, plane_len);
 }
 
 void	character_initialize_position(t_character *character, t_world *world)

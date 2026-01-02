@@ -52,9 +52,16 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/core_bonus/engine_error_bonus.c \
 				bonus/core_bonus/engine_init_bonus.c \
 				bonus/entities_bonus/character_bonus.c \
+				bonus/entities_bonus/file_content_bonus.c \
+				bonus/entities_bonus/map_check_bonus.c \
+				bonus/entities_bonus/map_layout_bonus.c \
 				bonus/entities_bonus/texture_bonus.c \
 				bonus/entities_bonus/world_bonus.c \
+				bonus/entities_bonus/world_creation_bonus.c \
+				bonus/entities_bonus/world_view_parsing_bonus.c \
+				bonus/entities_bonus/world_parse_surfaces_bonus.c  \
 				bonus/entities_bonus/world_parsing_bonus.c \
+				bonus/entities_bonus/world_setup_validation_bonus.c \
 				bonus/entities_bonus/world_utils_bonus.c \
 				bonus/entities_bonus/world_validation_bonus.c \
 				bonus/graphics_bonus/minimap_bonus.c \

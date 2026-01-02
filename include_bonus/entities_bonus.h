@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:23:09 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 20:01:57 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,33 +104,53 @@ struct						s_ray
 };
 
 t_character					*character_allocate(void);
+void						character_set_orientation(t_character *character,
+								char orientation);
 void						character_initialize_position(
 								t_character *character,
 								t_world *world);
-void						character_set_orientation(t_character *character,
-								char orientation);
 void						character_destroy(t_character *character);
 
-t_world						*world_create(void);
-int							world_parse_file(t_world *world,
-								const char *filename);
-int							world_validate(t_world *world);
-void						world_destroy(t_world *world);
-int							world_is_wall(t_world *world, int x, int y);
-char						world_get_cell(t_world *world, int x, int y);
+char						*read_file_content(const char *filename);
+
+int							is_map_line(char *line);
+void						parse_map_dimensions(char **lines, int start_index,
+								t_world *world);
+void						copy_map_data(char **lines, int start_index,
+								t_world *world);
+
+int							validate_map_layout(char *content);
 
 t_texture					*texture_allocate(void);
 int							texture_load_from_file(t_texture *texture,
 								void *mlx_ptr, char *path);
 void						texture_destroy(t_texture *texture, void *mlx_ptr);
 
-int							check_map_closed(t_world *world);
+int							world_validate(t_world *world);
+int							world_is_wall(t_world *world, int x, int y);
+char						world_get_cell(t_world *world, int x, int y);
+
+t_world						*world_create(void);
+void						world_destroy(t_world *world);
+
+int							parse_color_or_texture(t_world *world, char *line);
+
+int							world_parse_file(t_world *world,
+								const char *filename);
+
+int							check_floor_ceiling_set(t_world *world);
+int							check_textures_loaded(t_world *world);
+void						fill_sprite_array(t_world *world);
+int							init_sprite_positions(t_world *world);
+void						count_map_players(t_world *world);
 
 int							parse_color_value(char *color_str);
-int							is_map_line(char *line);
-void						parse_map_dimensions(char **lines, int start_index,
-								t_world *world);
-void						copy_map_data(char **lines, int start_index,
-								t_world *world);
+
+int							check_player_exists(t_world *world);
+int							flood_fill(t_world *world, char **map, int x,
+								int y);
+int							check_map_closed(t_world *world);
+
+int							parse_texture_line(t_world *world, char *line);
 
 #endif

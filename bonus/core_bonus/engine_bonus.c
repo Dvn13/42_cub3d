@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:06 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:10:36 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 18:56:01 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ int	engine_main_loop(t_engine *engine)
 static void	update_sprites(t_engine *engine)
 {
 	static int	frame_counter = 0;
+	t_world		*frame;
 
 	if (!engine || !engine->world)
 		return ;
 	frame_counter++;
 	if (frame_counter >= 15)
-	{
-		engine->world->current_sprite_frame = (engine->world->current_sprite_frame + 1) % 10;
+	{	
+		frame = engine->world;
+		frame->current_sprite_frame = (frame->current_sprite_frame + 1) % 10;
 		frame_counter = 0;
 	}
 }
