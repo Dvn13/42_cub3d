@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 15:22:55 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:15:11 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	render_walls(t_engine *engine)
 		ray_trace_calculate_step_and_side_dist(&ray, engine->character);
 		ray_trace_perform_dda(&ray, engine->world);
 		ray_trace_calculate_wall_distance(&ray, engine->character);
+		engine->renderer->z_buffer[x] = ray.perp_wall_dist;
 		ray_trace_calculate_draw_limits(&ray);
 		ray_trace_calculate_wall_x(&ray, engine->character);
 		cell_type = world_get_cell(engine->world, ray.map_x, ray.map_y);

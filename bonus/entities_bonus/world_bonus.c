@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 15:16:37 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:11:16 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void	world_destroy(t_world *world)
 		safe_free(world->west_texture_path);
 	if (world->door_texture_path)
 		safe_free(world->door_texture_path);
+	if (world->sprites)
+		safe_free(world->sprites);
 	safe_free(world);
 }

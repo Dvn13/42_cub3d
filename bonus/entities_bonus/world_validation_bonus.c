@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 22:06:33 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:13:53 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ static void	count_map_players(t_world *world)
 				world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
 			{
 				world->character_count++;
+			}
+			else if (world->grid[i][j] == SPRITE_CHAR)
+			{
+				world->sprite_count++;
 			}
 			j++;
 		}
@@ -153,11 +157,47 @@ int	check_map_closed(t_world *world)
 	return (1);
 }
 
+static int	init_sprite_positions(t_world *world)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	if (world->sprite_count == 0)
+		return (1);
+	world->sprites = malloc(sizeof(t_sprite) * world->sprite_count);
+	if (!world->sprites)
+		return (report_error("Memory allocation for sprites failed"));
+	i = 0;
+	k = 0;
+	while (i < world->height)
+	{
+		j = 0;
+		while (world->grid[i][j])
+		{
+			if (world->grid[i][j] == SPRITE_CHAR)
+			{
+				world->sprites[k].x = j + 0.5;
+				world->sprites[k].y = i + 0.5;
+				world->sprites[k].texture_id = 0;
+				world->sprites[k].dist = 0;
+				world->grid[i][j] = '0';
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 int	world_validate(t_world *world)
 {
 	if (!world || !world->grid)
 		return (report_error("Map data is missing or empty"));
 	count_map_players(world);
+	if (!init_sprite_positions(world))
+		return (0);
 	if (!check_textures_loaded(world))
 		return (0);
 	if (!check_floor_ceiling_set(world))

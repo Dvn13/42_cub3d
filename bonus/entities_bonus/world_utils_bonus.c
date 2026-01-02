@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 14:21:53 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:12:40 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	is_map_line(char *line)
 		if (line[i] != '0' && line[i] != '1' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
 			&& line[i] != 'D' && line[i] != 'O' &&  line[i] != ' '
-			&& line[i] != '\n')
+			&& line[i] != '\n' && line[i] != SPRITE_CHAR)
 			return (0);
 		i++;
 	}

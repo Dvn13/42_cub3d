@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 15:27:14 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:29:19 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,28 @@ t_renderer	*renderer_create(void *mlx_ptr)
 			&renderer->bits_per_pixel, &renderer->size_line, &renderer->endian);
 	renderer->image_width = SCREEN_WIDTH;
 	renderer->image_height = SCREEN_HEIGHT;
+	renderer->z_buffer = safe_calloc(SCREEN_WIDTH, sizeof(double));
+	if (!renderer->z_buffer)
+	{
+		renderer_destroy(renderer, mlx_ptr);
+		return (NULL);
+	}
+	renderer->sprite_textures = safe_calloc(10, sizeof(t_texture *));
+	if (!renderer->sprite_textures)
+	{
+		renderer_destroy(renderer, mlx_ptr);
+		return (NULL);
+	}
+	renderer->sprite_text_count = 10;
 	return (renderer);
 }
 
 int load_bonus_textures(t_engine *engine)
 {
+	int i;
+    char *base_path;
+    char path[100];
+	
     if (engine->world->floor_texture_path)
     {
         engine->renderer->floor_texture = texture_allocate();
@@ -65,6 +82,16 @@ int load_bonus_textures(t_engine *engine)
 	if (!texture_load_from_file(engine->renderer->door_texture,
 		engine->mlx_ptr, engine->world->door_texture_path))
 		return (0);
+	i = 0;
+    base_path = "assets/sprites/Gold_";
+	while (i < 10)
+    {
+        engine->renderer->sprite_textures[i] = texture_allocate();
+        sprintf(path, "%s%d.xpm", base_path, 21 + i);
+        if (!texture_load_from_file(engine->renderer->sprite_textures[i], engine->mlx_ptr, path))
+            return (0);
+        i++;
+    }
     return (1);
 }
 
@@ -74,6 +101,19 @@ void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 		return ;
 	if (renderer->image_ptr)
 		mlx_destroy_image(mlx_ptr, renderer->image_ptr);
+	if (renderer->z_buffer)
+		safe_free(renderer->z_buffer);
+	if (renderer->sprite_textures)
+	{
+		int i = 0;
+		while (i < renderer->sprite_text_count)
+		{
+			if (renderer->sprite_textures[i])
+				texture_destroy(renderer->sprite_textures[i], mlx_ptr);
+			i++;
+		}
+		safe_free(renderer->sprite_textures);
+	}
 	safe_free(renderer);
 }
 

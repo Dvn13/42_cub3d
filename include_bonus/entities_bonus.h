@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 14:04:55 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:23:09 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ struct						s_character
 	char					spawn_orientation;
 };
 
+typedef struct s_sprite
+{
+	double					x;
+	double					y;
+	int						texture_id;
+	double					dist;
+}							t_sprite;
+
 struct						s_world
 {
 	char					**grid;
@@ -55,6 +63,9 @@ struct						s_world
 	int						floor_color;
 	int						ceiling_color;
 	int						character_count;
+	t_sprite				*sprites;
+	int						sprite_count;
+	int						current_sprite_frame;
 };
 
 struct						s_texture

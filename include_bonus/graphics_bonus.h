@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 14:03:21 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:26:27 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ struct			s_renderer
 	int			bits_per_pixel;
 	int			size_line;
 	int			endian;
+	double		*z_buffer;
+	t_texture	**sprite_textures;
+	int			sprite_text_count;
 	t_texture	*textures[4];
 	t_texture	*floor_texture;
 	t_texture	*ceiling_texture;
 	t_texture	*door_texture;
 };
 
-struct	s_floor
+struct			s_floor
 {
     float		ray_dir_x0;
     float		ray_dir_y0;
@@ -81,4 +84,5 @@ int				ray_trace_get_texture_index(t_ray *ray);
 int				load_all_textures(t_renderer *renderer, t_world *world,
 					void *mlx_ptr);
 int				load_bonus_textures(t_engine *engine);
+void			render_sprites(t_engine *engine);
 #endif

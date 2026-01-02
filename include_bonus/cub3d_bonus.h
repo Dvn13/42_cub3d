@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/01 14:57:00 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 13:21:04 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 #define COLOR_WALL 0x808080
 #define COLOR_FLOOR 0x202020
 #define COLOR_PLAYER 0xFF0000
+#define SPRITE_CHAR 'G'
 
 # define ERR_MEMORY_ALLOC 1
 # define ERR_FILE_ACCESS 2
