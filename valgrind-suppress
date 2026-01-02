@@ -1,0 +1,21 @@
+{
+   ignore_mlx_mouse_hide_leak
+   Memcheck:Leak
+   ...
+   fun:mlx_mouse_hide
+   ...
+}
+{
+   ignore_x11_leaks
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so*
+   ...
+}
+{
+   ignore_mlx_new_image_leak
+   Memcheck:Leak
+   ...
+   fun:mlx_new_image
+   ...
+}

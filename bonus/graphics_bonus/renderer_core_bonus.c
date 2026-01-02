@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 13:29:19 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/02 14:53:53 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int load_bonus_textures(t_engine *engine)
 
 void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 {
+	int i;
+	
 	if (!renderer)
 		return ;
 	if (renderer->image_ptr)
@@ -105,7 +107,7 @@ void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 		safe_free(renderer->z_buffer);
 	if (renderer->sprite_textures)
 	{
-		int i = 0;
+		i = 0;
 		while (i < renderer->sprite_text_count)
 		{
 			if (renderer->sprite_textures[i])
@@ -114,6 +116,24 @@ void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 		}
 		safe_free(renderer->sprite_textures);
 	}
+	if (renderer->floor_texture)
+    {
+        if (renderer->floor_texture->image_ptr)
+            mlx_destroy_image(mlx_ptr, renderer->floor_texture->image_ptr);
+        safe_free(renderer->floor_texture);
+    }
+    if (renderer->ceiling_texture)
+    {
+        if (renderer->ceiling_texture->image_ptr)
+            mlx_destroy_image(mlx_ptr, renderer->ceiling_texture->image_ptr);
+        safe_free(renderer->ceiling_texture);
+    }
+    if (renderer->door_texture)
+    {
+        if (renderer->door_texture->image_ptr)
+            mlx_destroy_image(mlx_ptr, renderer->door_texture->image_ptr);
+        safe_free(renderer->door_texture);
+    }
 	safe_free(renderer);
 }
 
