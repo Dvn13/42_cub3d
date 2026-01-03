@@ -5,8 +5,8 @@ EA ./assets/textures/wall4.xpm
 
 DO ./assets/textures/door.xpm
 
-F ./assets/textures/ground.xpm
-C ./assets/textures/sky.xpm
+F ./assets/textures/marble.xpm
+C ./assets/textures/starnight.xpm
 
         1111111111111111111111111
         1000000000110000000000001
