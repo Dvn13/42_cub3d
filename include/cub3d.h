@@ -18,11 +18,11 @@
 # include "entities.h"
 # include "graphics.h"
 # include "input.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <errno.h>
 # include <string.h>
 # include <unistd.h>
 
@@ -45,14 +45,14 @@
 # define EAST_SPAWN 'E'
 # define WEST_SPAWN 'W'
 
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-#  define KEY_M 109
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-#  define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_M 109
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
 
 # define COLOR_RED 0xFF0000
 # define COLOR_GREEN 0x00FF00

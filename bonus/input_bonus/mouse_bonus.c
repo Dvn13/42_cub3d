@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 13:57:12 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 22:32:32 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/03 04:02:32 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	mouse_toggle(t_engine *engine)
 	engine->mouse_enabled = !engine->mouse_enabled;
 	if (engine->mouse_enabled)
 	{
-		mlx_mouse_move(engine->mlx_ptr, engine->win_ptr,
-			SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		mlx_mouse_hide(engine->mlx_ptr, engine->win_ptr); 
+		mlx_mouse_move(engine->mlx_ptr, engine->win_ptr, SCREEN_WIDTH / 2,
+			SCREEN_HEIGHT / 2);
+		mlx_mouse_hide(engine->mlx_ptr, engine->win_ptr);
 	}
 	else
 	{
-		 mlx_mouse_show(engine->mlx_ptr, engine->win_ptr);
+		mlx_mouse_show(engine->mlx_ptr, engine->win_ptr);
 	}
 }
 
@@ -40,7 +40,7 @@ int	handle_mouse_movement(int x, int y, t_engine *engine)
 		return (0);
 	center_x = SCREEN_WIDTH / 2;
 	center_y = SCREEN_HEIGHT / 2;
-	delta_x = x -center_x;
+	delta_x = x - center_x;
 	if (delta_x == 0)
 		return (0);
 	if (delta_x > 0)

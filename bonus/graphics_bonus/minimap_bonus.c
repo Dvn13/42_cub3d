@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 16:04:29 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/30 17:54:42 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/03 04:01:03 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ static void	draw_player_on_minimap(t_engine *engine)
 		j = -2;
 		while (j <= 2)
 		{
-			if ((center_x + j) < SCREEN_WIDTH && (center_y + i) < SCREEN_HEIGHT)
-				renderer_put_pixel(engine->renderer, center_x + j, center_y + i, COLOR_PLAYER);
+			if ((center_x + j) < SCREEN_WIDTH
+				&& (center_y + i) < SCREEN_HEIGHT)
+				renderer_put_pixel(engine->renderer, center_x + j,
+					center_y + i, COLOR_PLAYER);
 			j++;
 		}
 		i++;

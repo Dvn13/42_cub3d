@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:06 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:56:01 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/03 04:00:49 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	update_sprites(t_engine *engine)
 		return ;
 	frame_counter++;
 	if (frame_counter >= 15)
-	{	
+	{
 		frame = engine->world;
 		frame->current_sprite_frame = (frame->current_sprite_frame + 1) % 10;
 		frame_counter = 0;

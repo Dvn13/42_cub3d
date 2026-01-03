@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   renderer_core_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 14:53:53 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/03 04:01:36 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+static int	init_renderer_buffers(t_renderer *renderer, void *mlx_ptr)
+{
+	renderer->z_buffer = safe_calloc(SCREEN_WIDTH, sizeof(double));
+	if (!renderer->z_buffer)
+	{
+		renderer_destroy(renderer, mlx_ptr);
+		return (0);
+	}
+	renderer->sprite_textures = safe_calloc(10, sizeof(t_texture *));
+	if (!renderer->sprite_textures)
+	{
+		renderer_destroy(renderer, mlx_ptr);
+		return (0);
+	}
+	renderer->sprite_text_count = 10;
+	return (1);
+}
 
 t_renderer	*renderer_create(void *mlx_ptr)
 {
@@ -29,76 +47,15 @@ t_renderer	*renderer_create(void *mlx_ptr)
 			&renderer->bits_per_pixel, &renderer->size_line, &renderer->endian);
 	renderer->image_width = SCREEN_WIDTH;
 	renderer->image_height = SCREEN_HEIGHT;
-	renderer->z_buffer = safe_calloc(SCREEN_WIDTH, sizeof(double));
-	if (!renderer->z_buffer)
-	{
-		renderer_destroy(renderer, mlx_ptr);
+	if (!init_renderer_buffers(renderer, mlx_ptr))
 		return (NULL);
-	}
-	renderer->sprite_textures = safe_calloc(10, sizeof(t_texture *));
-	if (!renderer->sprite_textures)
-	{
-		renderer_destroy(renderer, mlx_ptr);
-		return (NULL);
-	}
-	renderer->sprite_text_count = 10;
 	return (renderer);
-}
-
-int load_bonus_textures(t_engine *engine)
-{
-	int i;
-    char *base_path;
-    char path[100];
-	
-    if (engine->world->floor_texture_path)
-    {
-        engine->renderer->floor_texture = texture_allocate();
-        if (!texture_load_from_file(engine->renderer->floor_texture, 
-            engine->mlx_ptr, engine->world->floor_texture_path))
-            return (0);
-    }
-    else
-        engine->renderer->floor_texture = NULL;
-    if (engine->world->ceiling_texture_path)
-    {
-        engine->renderer->ceiling_texture = texture_allocate();
-        if (!texture_load_from_file(engine->renderer->ceiling_texture, 
-            engine->mlx_ptr, engine->world->ceiling_texture_path))
-            return (0);
-    }
-    else
-		engine->renderer->ceiling_texture = NULL;
-	if (!engine->world->door_texture_path )
-	{
-		engine->world->door_texture_path
-			= duplicate_string("./assets/textures/door.xpm");
-		if (!engine->world->door_texture_path)
-            return (0);
-	}
-	engine->renderer->door_texture = texture_allocate();
-	if (!engine->renderer->door_texture)
-        return (0);
-	if (!texture_load_from_file(engine->renderer->door_texture,
-		engine->mlx_ptr, engine->world->door_texture_path))
-		return (0);
-	i = 0;
-    base_path = "assets/sprites/Gold_";
-	while (i < 10)
-    {
-        engine->renderer->sprite_textures[i] = texture_allocate();
-        sprintf(path, "%s%d.xpm", base_path, 21 + i);
-        if (!texture_load_from_file(engine->renderer->sprite_textures[i], engine->mlx_ptr, path))
-            return (0);
-        i++;
-    }
-    return (1);
 }
 
 void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 {
-	int i;
-	
+	int	i;
+
 	if (!renderer)
 		return ;
 	if (renderer->image_ptr)
@@ -116,24 +73,7 @@ void	renderer_destroy(t_renderer *renderer, void *mlx_ptr)
 		}
 		safe_free(renderer->sprite_textures);
 	}
-	if (renderer->floor_texture)
-    {
-        if (renderer->floor_texture->image_ptr)
-            mlx_destroy_image(mlx_ptr, renderer->floor_texture->image_ptr);
-        safe_free(renderer->floor_texture);
-    }
-    if (renderer->ceiling_texture)
-    {
-        if (renderer->ceiling_texture->image_ptr)
-            mlx_destroy_image(mlx_ptr, renderer->ceiling_texture->image_ptr);
-        safe_free(renderer->ceiling_texture);
-    }
-    if (renderer->door_texture)
-    {
-        if (renderer->door_texture->image_ptr)
-            mlx_destroy_image(mlx_ptr, renderer->door_texture->image_ptr);
-        safe_free(renderer->door_texture);
-    }
+	destroy_bonus_textures(renderer, mlx_ptr);
 	safe_free(renderer);
 }
 

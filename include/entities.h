@@ -103,7 +103,7 @@ char						*read_file_content(const char *filename);
 
 void						copy_map_data(char **lines, int start_index,
 								t_world *world);
-								
+
 int							validate_map_layout(char *content);
 
 int							parse_color_line(t_world *world, char *line);

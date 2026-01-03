@@ -40,20 +40,12 @@ static char	*extract_word(const char *s, int start, int end)
 	return (word);
 }
 
-char	**split_string(char const *s, char c)
+static int	process_words(char **result, const char *s, char c, int word_count)
 {
-	char	**result;
-	int		word_count;
-	int		i;
-	int		j;
-	int		start;
+	int	i;
+	int	j;
+	int	start;
 
-	if (!s)
-		return (NULL);
-	word_count = count_words(s, c);
-	result = safe_calloc(word_count + 1, sizeof(char *));
-	if (!result)
-		return (NULL);
 	i = 0;
 	j = 0;
 	while (j < word_count)
@@ -65,11 +57,27 @@ char	**split_string(char const *s, char c)
 			i++;
 		result[j] = extract_word(s, start, i);
 		if (!result[j])
-		{
-			free_string_array(result);
-			return (NULL);
-		}
+			return (0);
 		j++;
+	}
+	return (1);
+}
+
+char	**split_string(char const *s, char c)
+{
+	char	**result;
+	int		word_count;
+
+	if (!s)
+		return (NULL);
+	word_count = count_words(s, c);
+	result = safe_calloc(word_count + 1, sizeof(char *));
+	if (!result)
+		return (NULL);
+	if (!process_words(result, s, c, word_count))
+	{
+		free_string_array(result);
+		return (NULL);
 	}
 	return (result);
 }

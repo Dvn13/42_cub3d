@@ -18,11 +18,11 @@
 # include "entities_bonus.h"
 # include "graphics_bonus.h"
 # include "input_bonus.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <errno.h>
 # include <string.h>
 # include <unistd.h>
 
@@ -45,15 +45,15 @@
 # define EAST_SPAWN 'E'
 # define WEST_SPAWN 'W'
 
-#  define KEY_W 119
-#  define KEY_A 97
-#  define KEY_S 115
-#  define KEY_D 100
-#  define KEY_M 109
-#  define KEY_E 101
-#  define KEY_LEFT 65361
-#  define KEY_RIGHT 65363
-#  define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_M 109
+# define KEY_E 101
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define KEY_ESC 65307
 
 # define COLOR_RED 0xFF0000
 # define COLOR_GREEN 0x00FF00
@@ -62,12 +62,12 @@
 # define COLOR_BLACK 0x000000
 # define COLOR_GRAY 0x808080
 
-#define MINIMAP_SCALE 10
-#define MINIMAP_PAD 10
-#define COLOR_WALL 0x808080
-#define COLOR_FLOOR 0x202020
-#define COLOR_PLAYER 0xFF0000
-#define SPRITE_CHAR 'G'
+# define MINIMAP_SCALE 10
+# define MINIMAP_PAD 10
+# define COLOR_WALL 0x808080
+# define COLOR_FLOOR 0x202020
+# define COLOR_PLAYER 0xFF0000
+# define SPRITE_CHAR 'G'
 
 # define ERR_MEMORY_ALLOC 1
 # define ERR_FILE_ACCESS 2
@@ -79,7 +79,7 @@ typedef struct s_engine		t_engine;
 typedef struct s_character	t_character;
 typedef struct s_world		t_world;
 typedef struct s_renderer	t_renderer;
-typedef	struct s_floor		t_floor;
+typedef struct s_floor		t_floor;
 typedef struct s_texture	t_texture;
 typedef struct s_ray		t_ray;
 typedef struct s_spr_calc	t_spr_calc;
