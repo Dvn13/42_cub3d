@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 17:03:32 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/03 04:13:50 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_ray		t_ray;
 typedef struct s_engine		t_engine;
 typedef struct s_character	t_character;
 typedef struct s_world		t_world;
+typedef struct s_sprite		t_sprite;
 
 struct						s_renderer
 {
@@ -102,4 +103,11 @@ int							load_all_textures(t_renderer *renderer,
 								t_world *world, void *mlx_ptr);
 int							load_bonus_textures(t_engine *engine);
 void						render_sprites(t_engine *engine);
+void						sort_sprites(t_sprite *sprites, int count);
+void						calculate_sprite_distances(t_engine *engine);
+void						calc_sprite_transform(t_engine *eng, t_sprite *spr,
+								t_spr_calc *spr_calc);
+void						calc_sprite_dims(t_spr_calc *calc);
+void						destroy_bonus_textures(t_renderer *renderer,
+								void *mlx_ptr);
 #endif
