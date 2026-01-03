@@ -19,3 +19,78 @@
    fun:mlx_new_image
    ...
 }
+{
+   leak_linux_loader_malloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_dl_map_object
+}
+{
+   leak_linux_loader_calloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   fun:_dl_check_map_versions
+}
+{
+   leak_x11_display_info
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XcursorGetDisplayInfo
+}
+{
+   leak_x11_create_lc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XlcCreateLC
+}
+{
+   leak_x11_default_loader
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XlcDefaultLoader
+}
+{
+   leak_x11_cursor_argb
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XcursorSupportsARGB
+}
+{
+   leak_x11_init_parse
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XrmInitParseInfo
+}
+{
+   leak_mlx_mouse_hide_x11
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_mouse_hide
+}
+{
+   leak_x11_locale_loader
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XlcAddLoader
+}
+{
+   leak_linux_loader_new_object_fd
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:calloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   ...
+}
