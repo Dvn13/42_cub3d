@@ -3,31 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/03 04:02:06 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:16:11 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	interact_with_door(t_engine *engine)
+void    interact_with_door(t_engine *engine)
 {
-	int		target_x;
-	int		target_y;
-	char	cell;
+    int     target_x;
+    int     target_y;
+    char    cell;
 
-	target_x = (int)(engine->character->pos.x + engine->character->dir.x * 1.0);
-	target_y = (int)(engine->character->pos.y + engine->character->dir.y * 1.0);
-	if (target_x < 0 || target_x >= engine->world->width || target_y < 0
-		|| target_y >= engine->world->height)
-		return ;
-	cell = world_get_cell(engine->world, target_x, target_y);
-	if (cell == 'D')
-		engine->world->grid[target_y][target_x] = 'O';
-	else if (cell == 'O')
-		engine->world->grid[target_y][target_x] = 'D';
+    target_x = (int)(engine->character->pos.x + engine->character->dir.x * 1.0);
+    target_y = (int)(engine->character->pos.y + engine->character->dir.y * 1.0);
+    if (target_x < 0 || target_x >= engine->world->width || target_y < 0
+        || target_y >= engine->world->height)
+        return ;
+
+    cell = world_get_cell(engine->world, target_x, target_y);
+
+    if (cell == 'D')
+    {
+        engine->world->grid[target_y][target_x] = 'O';
+    }
+    else if (cell == 'O')
+    {
+        if ((int)engine->character->pos.x == target_x && 
+            (int)engine->character->pos.y == target_y)
+            return ;
+        engine->world->grid[target_y][target_x] = 'D';
+    }
 }
 
 int	handle_key_press(int keycode, t_engine *engine)

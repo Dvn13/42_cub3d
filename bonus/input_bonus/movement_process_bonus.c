@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement_process_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 04:03:47 by mdivan            #+#    #+#             */
-/*   Updated: 2026/01/03 04:03:49 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:16:17 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

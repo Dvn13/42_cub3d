@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer.c                                       :+:      :+:    :+:   */
+/*   ray_tracer_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 13:04:59 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 13:05:00 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:25:30 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,39 @@ void	ray_trace_init(t_ray *ray, t_character *character, int screen_x)
 	ray->hit = 0;
 }
 
+static void	perform_ray_step(t_ray *ray)
+{
+	if (ray->side_dist_x < ray->side_dist_y)
+	{
+		ray->side_dist_x += ray->delta_dist_x;
+		ray->map_x += ray->step_x;
+		ray->side = 0;
+	}
+	else
+	{
+		ray->side_dist_y += ray->delta_dist_y;
+		ray->map_y += ray->step_y;
+		ray->side = 1;
+	}
+}
+
 void	ray_trace_perform_dda(t_ray *ray, t_world *world)
 {
+	char	cell_content;
+
 	if (!ray || !world)
 		return ;
 	while (ray->hit == 0)
 	{
-		if (ray->side_dist_x < ray->side_dist_y)
+		perform_ray_step(ray);
+		if (ray->map_x >= 0 && ray->map_x < world->width
+			&& ray->map_y >= 0 && ray->map_y < world->height)
 		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
+			cell_content = world->grid[ray->map_y][ray->map_x];
+			if (cell_content == '1' || cell_content == 'D')
+				ray->hit = 1;
 		}
 		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (world_is_wall(world, ray->map_x, ray->map_y))
 			ray->hit = 1;
 	}
 }

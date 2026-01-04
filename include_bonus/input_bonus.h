@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:27 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 20:51:01 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/04 13:18:41 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		handle_key_press(int keycode, t_engine *engine);
 int		handle_key_release(int keycode, t_engine *engine);
 int		handle_window_close(t_engine *engine);
 void	process_input(t_engine *engine);
+void	interact_with_door(t_engine *engine);
 
 void	move_character_forward(t_character *character, t_world *world);
 void	move_character_backward(t_character *character, t_world *world);
