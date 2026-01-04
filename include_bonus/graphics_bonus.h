@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/03 04:13:50 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:13:36 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int							ray_trace_get_texture_index(t_ray *ray);
 int							load_all_textures(t_renderer *renderer,
 								t_world *world, void *mlx_ptr);
 int							load_bonus_textures(t_engine *engine);
+void						draw_sprites_on_minimap(t_engine *engine);
 void						render_sprites(t_engine *engine);
 void						sort_sprites(t_sprite *sprites, int count);
 void						calculate_sprite_distances(t_engine *engine);

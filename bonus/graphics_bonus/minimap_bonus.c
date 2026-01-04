@@ -6,13 +6,13 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 16:04:29 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 13:37:18 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:39:01 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-static void	draw_minimap_line(t_engine *engine, int x1, int y1, int x2, int y2)
+static void	draw_minimap_line(t_engine *engine, int *coords)
 {
 	double	delta_x;
 	double	delta_y;
@@ -20,16 +20,16 @@ static void	draw_minimap_line(t_engine *engine, int x1, int y1, int x2, int y2)
 	double	x;
 	double	y;
 
-	delta_x = x2 - x1;
-	delta_y = y2 - y1;
+	delta_x = coords[2] - coords[0];
+	delta_y = coords[3] - coords[1];
 	if (fabs(delta_x) > fabs(delta_y))
 		steps = fabs(delta_x);
 	else
 		steps = fabs(delta_y);
 	delta_x /= steps;
 	delta_y /= steps;
-	x = x1;
-	y = y1;
+	x = coords[0];
+	y = coords[1];
 	while (steps >= 0)
 	{
 		if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
@@ -42,18 +42,15 @@ static void	draw_minimap_line(t_engine *engine, int x1, int y1, int x2, int y2)
 
 static void	draw_player_direction(t_engine *engine)
 {
-	int	center_x;
-	int	center_y;
-	int	end_x;
-	int	end_y;
+	int	coords[4];
 	int	line_len;
 
 	line_len = MINIMAP_SCALE * 2;
-	center_x = MINIMAP_PAD + (int)(engine->character->pos.x * MINIMAP_SCALE);
-	center_y = MINIMAP_PAD + (int)(engine->character->pos.y * MINIMAP_SCALE);
-	end_x = center_x + (int)(engine->character->dir.x * line_len);
-	end_y = center_y + (int)(engine->character->dir.y * line_len);
-	draw_minimap_line(engine, center_x, center_y, end_x, end_y);
+	coords[0] = MINIMAP_PAD + (int)(engine->character->pos.x * MINIMAP_SCALE);
+	coords[1] = MINIMAP_PAD + (int)(engine->character->pos.y * MINIMAP_SCALE);
+	coords[2] = coords[0] + (int)(engine->character->dir.x * line_len);
+	coords[3] = coords[1] + (int)(engine->character->dir.y * line_len);
+	draw_minimap_line(engine, coords);
 }
 
 static void	draw_minimap_square(t_engine *engine, int x, int y, int color)

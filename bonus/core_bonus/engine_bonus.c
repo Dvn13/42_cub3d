@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:06 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/03 04:00:49 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:11:07 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	engine_update(t_engine *engine)
 	if (!engine || !engine->is_running)
 		return ;
 	process_input(engine);
+	check_sprite_collection(engine);
 	update_sprites(engine);
 	render_frame(engine);
 }

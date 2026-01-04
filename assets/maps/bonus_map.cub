@@ -1,11 +1,11 @@
-NO ./assets/textures/wall1.xpm
-SO ./assets/textures/wall2.xpm
-WE ./assets/textures/wall3.xpm
-EA ./assets/textures/wall4.xpm
+NO ./assets/textures/wall1dark.xpm
+SO ./assets/textures/wall2dark.xpm
+WE ./assets/textures/wall3dark.xpm
+EA ./assets/textures/wall4dark.xpm
 
 DO ./assets/textures/door.xpm
 
-F ./assets/textures/marble.xpm
+F ./assets/textures/darkfloor.xpm
 C ./assets/textures/starnight.xpm
 
         1111111111111111111111111

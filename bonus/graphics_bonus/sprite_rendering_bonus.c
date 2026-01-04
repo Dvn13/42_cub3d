@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_rendering_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 04:03:25 by mdivan            #+#    #+#             */
-/*   Updated: 2026/01/03 04:03:28 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:33:34 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
+
+void	draw_sprites_on_minimap(t_engine *engine)
+{
+	int			i;
+	int			scr_x;
+	int			scr_y;
+	t_sprite	*sprite;
+
+	i = 0;
+	while (i < engine->world->sprite_count)
+	{
+		sprite = &engine->world->sprites[i];
+		if (sprite->is_collected == 0)
+		{
+			scr_x = MINIMAP_PAD + (int)(sprite->x * MINIMAP_SCALE);
+			scr_y = MINIMAP_PAD + (int)(sprite->y * MINIMAP_SCALE);
+			renderer_put_pixel(engine->renderer, scr_x, scr_y, 0xFFD700);
+			renderer_put_pixel(engine->renderer, scr_x + 1, scr_y, 0xFFD700);
+			renderer_put_pixel(engine->renderer, scr_x, scr_y + 1, 0xFFD700);
+			renderer_put_pixel(engine->renderer, scr_x + 1, scr_y + 1,
+				0xFFD700);
+		}
+		i++;
+	}
+}
 
 static void	draw_sprite_stripe(t_engine *eng, t_spr_calc *spr_calc,
 	int stripe, int tex_x)
@@ -52,19 +77,23 @@ static void	process_sprite_loop(t_engine *eng, t_spr_calc *calc,
 	}
 }
 
-static void	process_sprites(t_engine *eng)
+static void	process_sprites(t_engine *engine)
 {
 	t_spr_calc	spr_calc;
 	int			i;
+	int			frame;
 	t_texture	*tex;
 
 	i = -1;
-	tex = eng->renderer->sprite_textures[eng->world->current_sprite_frame];
-	while (++i < eng->world->sprite_count)
+	frame = engine->world->current_sprite_frame;
+	tex = engine->renderer->sprite_textures[frame];
+	while (++i < engine->world->sprite_count)
 	{
-		calc_sprite_transform(eng, &eng->world->sprites[i], &spr_calc);
+		if (engine->world->sprites[i].is_collected)
+			continue ;
+		calc_sprite_transform(engine, &engine->world->sprites[i], &spr_calc);
 		calc_sprite_dims(&spr_calc);
-		process_sprite_loop(eng, &spr_calc, tex);
+		process_sprite_loop(engine, &spr_calc, tex);
 	}
 }
 

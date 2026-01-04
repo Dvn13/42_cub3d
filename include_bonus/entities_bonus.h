@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 20:01:57 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/04 14:08:15 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_sprite
 	double					x;
 	double					y;
 	int						texture_id;
+	int						is_collected;
 	double					dist;
 }							t_sprite;
 
