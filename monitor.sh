@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROCESS_NAME="cub3D"
+PROCESS_NAME="cub3D_bonus"
 
 # Döngü yenileme hızı (saniye)
 REFRESH_RATE=0.5

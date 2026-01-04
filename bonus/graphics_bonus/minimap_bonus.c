@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 16:04:29 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:39:01 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/04 17:12:58 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	render_minimap(t_engine *engine)
 		}
 		y++;
 	}
+	draw_sprites_on_minimap(engine);
 	draw_player_on_minimap(engine);
 	draw_player_direction(engine);
 }
