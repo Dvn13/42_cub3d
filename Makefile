@@ -10,8 +10,7 @@ MLX_FLAGS = -L$(MLX_DIR) -Lmlx -lmlx -lXext -lX11 -lm
 
 SRCDIR = src
 BONUSDIR = bonus
-OBJDIR = obj
-OBJDIR_BONUS = obj_bonus
+
 INCDIR = include
 INCBNSDIR = include_bonus
 
@@ -86,38 +85,25 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/utils_bonus/string_manipulation_bonus.c \
 				bonus/utils_bonus/memory_utils_bonus.c
 
-OBJECTS = $(SOURCES:%.c=$(OBJDIR)/%.o)
-
-BONUS_OBJECTS = $(BONUS_SOURCES:%.c=$(OBJDIR_BONUS)/%.o)
-
 INCLUDES = -I$(INCDIR) -Imlx
 
 INCLUDES_BONUS = -I$(INCBNSDIR) -Imlx
 
 all: $(NAME)
 
-$(NAME): $(MLX_LIB) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(MLX_FLAGS) -o $(NAME)
+$(NAME): $(MLX_LIB)
+	$(CC) $(CFLAGS) $(SOURCES) $(INCLUDES) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
 
-$(OBJDIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(MLX_LIB) $(BONUS_OBJECTS)
-	$(CC) $(CFLAGS) $(BONUS_OBJECTS) $(MLX_FLAGS) -o $(NAME_BONUS)
-
-
-$(OBJDIR_BONUS)/%.o: %.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES_BONUS) -c $< -o $@
+$(NAME_BONUS): $(MLX_LIB)
+	$(CC) $(CFLAGS) $(BONUS_SOURCES) $(INCLUDES_BONUS) $(MLX_FLAGS) -o $(NAME_BONUS)
 
 clean:
-	rm -rf $(OBJDIR) $(OBJDIR_BONUS)
+	rm -rf $(NAME) $(NAME_BONUS)
 
 fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
