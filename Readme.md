@@ -14,9 +14,9 @@ This project focuses on rigorous memory management, mathematical precision (DDA 
 
 | Game View |
 |:---:|
-| ![Main View](assets/screenshots/cub3D.png) |
-| ![Sprites](assets/screenshots/gold_sprites.png) |
-| ![Door](assets/screenshots/door.png) |
+| ![Main View](assets/screenshots/game_view.png) |
+| ![Sprites](assets/screenshots/sprites_view.png) |
+| ![Door](assets/screenshots/door_view.png) |
 
 ---
 
