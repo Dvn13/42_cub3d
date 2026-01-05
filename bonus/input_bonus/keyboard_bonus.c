@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:29:25 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 20:17:02 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	interact_with_door(t_engine *engine)
 	int		target_x;
 	int		target_y;
 	char	cell;
+	double	dx;
+	double	dy;
 
 	target_x = (int)(engine->character->pos.x + engine->character->dir.x * 1.0);
 	target_y = (int)(engine->character->pos.y + engine->character->dir.y * 1.0);
@@ -25,13 +27,12 @@ void	interact_with_door(t_engine *engine)
 		return ;
 	cell = world_get_cell(engine->world, target_x, target_y);
 	if (cell == 'D')
-	{
 		engine->world->grid[target_y][target_x] = 'O';
-	}
 	else if (cell == 'O')
 	{
-		if ((int)engine->character->pos.x == target_x
-			&& (int)engine->character->pos.y == target_y)
+		dx = engine->character->pos.x - (target_x + 0.5);
+		dy = engine->character->pos.y - (target_y + 0.5);
+		if (dx * dx + dy * dy < 0.64)
 			return ;
 		engine->world->grid[target_y][target_x] = 'D';
 	}

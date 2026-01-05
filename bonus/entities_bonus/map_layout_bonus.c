@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:03:38 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 19:55:07 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 20:01:11 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_config_line(char *str, int i)
 	if (!str[i] || str[i] == '\n')
 		return (0);
 	if (str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E'
-		|| str[i] == 'F' || str[i] == 'C' || str[i] == 'D' || str[i] == 'D')
+		|| str[i] == 'F' || str[i] == 'C' || str[i] == 'D')
 		return (1);
 	return (0);
 }

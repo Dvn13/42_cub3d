@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:27:37 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 20:12:15 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,12 @@ void						character_set_orientation(t_character *character,
 								char orientation);
 void						character_destroy(t_character *character);
 
+int							check_double_map_in_row(t_world *world,
+								int row_idx);
+
 char						*read_file_content(const char *filename);
+
+int							check_map_borders(t_world *world);
 
 void						copy_map_data(char **lines, int start_index,
 								t_world *world);
@@ -122,6 +127,7 @@ int							texture_load_from_file(t_texture *texture,
 								void *mlx_ptr, char *path);
 void						texture_destroy(t_texture *texture, void *mlx_ptr);
 
+int							is_valid_walkable_cell(char cell);
 int							check_map_closed(t_world *world);
 
 int							parse_color_value(char *color_str);

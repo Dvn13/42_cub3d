@@ -20,7 +20,9 @@ SOURCES = src/main.c \
 		  src/core/engine_init.c \
 		  src/core/engine_error.c \
 		  src/entities/character.c \
+		  src/entities/double_map_check.c \
 		  src/entities/file_content.c \
+		  src/entities/map_border_check.c \
 		  src/entities/map_check.c \
 		  src/entities/map_layout.c \
 		  src/entities/texture.c \

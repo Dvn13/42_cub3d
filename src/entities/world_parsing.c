@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/05 16:57:19 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/05 20:16:55 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,22 @@ static char	**load_file_lines(const char *filename)
 	return (lines);
 }
 
+static int	parse_config_line(t_world *world, char *line)
+{
+	int	tex_res;
+	int	col_res;
+
+	tex_res = parse_texture_line(world, line);
+	col_res = parse_color_line(world, line);
+	if (tex_res < 0 || col_res < 0)
+		return (-2);
+	return (0);
+}
+
 static int	process_lines_and_find_map(t_world *world, char **lines)
 {
 	int	i;
 	int	map_start;
-	int	tex_res;
-	int	col_res;
 
 	i = 0;
 	map_start = -1;
@@ -48,13 +58,8 @@ static int	process_lines_and_find_map(t_world *world, char **lines)
 				if (map_start == -1)
 					map_start = i;
 			}
-			else
-			{
-				tex_res = parse_texture_line(world, lines[i]);
-				col_res = parse_color_line(world, lines[i]);
-				if (tex_res < 0 || col_res < 0)
-					return (-2);
-			}
+			else if (parse_config_line(world, lines[i]) < 0)
+				return (-2);
 		}
 		i++;
 	}
