@@ -59,7 +59,7 @@ static int	fill_single_row(t_world *world, char *line, int i)
 	int	len;
 
 	len = string_length(line);
-	if (line[len - 1] == '\n')
+	while (len > 0 && (line[len - 1] == '\n' || line[len - 1] == '\r'))
 		len--;
 	world->grid[i] = safe_calloc(world->width + 1, sizeof(char));
 	if (!world->grid[i])
@@ -67,7 +67,10 @@ static int	fill_single_row(t_world *world, char *line, int i)
 	j = 0;
 	while (j < len)
 	{
-		world->grid[i][j] = line[j];
+		if (line[j] == '\t')
+			world->grid[i][j] = ' ';
+		else
+			world->grid[i][j] = line[j];
 		j++;
 	}
 	while (j < world->width)
