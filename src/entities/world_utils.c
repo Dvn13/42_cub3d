@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:44 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 17:57:16 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 18:27:54 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,15 @@ static int	get_rgb_result(char **rgb)
 	if (!is_str_digit(rgb[0]) || !is_str_digit(rgb[1])
 		|| !is_str_digit(rgb[2]))
 		return (-1);
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
+	if (string_length(rgb[0]) <= 3 && string_length(rgb[1]) <= 3
+		&& string_length(rgb[1]) <= 3)
+	{
+		r = ft_atoi(rgb[0]);
+		g = ft_atoi(rgb[1]);
+		b = ft_atoi(rgb[2]);
+	}
+	else
+		return (-1);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		return (-1);
 	return ((r << 16) | (g << 8) | b);
