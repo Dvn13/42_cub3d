@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_layout.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:23:52 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:37:51 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 16:57:21 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	check_row_state(char *content, int i, int *started, int *gap)
 	}
 	else if (!is_config_line(content, i))
 	{
+		if (!is_map_line(&content[i]))
+			return (report_error("Invalid line found in map file"));
 		if (*gap)
 			return (report_error("Map cannot be separated by empty lines"));
 		*started = 1;

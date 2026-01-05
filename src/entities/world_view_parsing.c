@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_view_parsing.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:18:15 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:34:51 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 17:00:08 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	set_single_texture(char **dest, char *path, char *err)
 {
 	if (*dest)
-		return (report_error(err));
+		return (report_error(err), -1);
 	*dest = duplicate_string(path);
 	return (1);
 }
@@ -58,15 +58,9 @@ static int	process_color_tokens(t_world *world, char **tokens)
 	int	color;
 
 	if (compare_strings(tokens[0], "F") == 0 && world->floor_color != -1)
-	{
-		error_handler("Duplicate color (F)", 2);
-		return (0);
-	}
+		return (report_error("Duplicate color (F)"), -1);
 	if (compare_strings(tokens[0], "C") == 0 && world->ceiling_color != -1)
-	{
-		error_handler("Duplicate color (C)", 2);
-		return (0);
-	}
+		return (report_error("Duplicate color (C)"), -1);
 	color = parse_color_value(tokens[1]);
 	if (color == -1)
 		return (0);
