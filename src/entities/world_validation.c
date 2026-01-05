@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/05 17:05:50 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/05 19:43:17 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,36 @@ static int	check_row_borders(char *row)
 	return (1);
 }
 
+static int	check_column_borders(t_world *world, int col)
+{
+	int		first_row;
+	int		last_row;
+	char	cell;
+
+	first_row = 0;
+	while (first_row < world->height)
+	{
+		cell = world->grid[first_row][col];
+		if (cell && cell != ' ' && cell != '\n')
+			break ;
+		first_row++;
+	}
+	last_row = world->height - 1;
+	while (last_row >= 0)
+	{
+		cell = world->grid[last_row][col];
+		if (cell && cell != ' ' && cell != '\n')
+			break ;
+		last_row--;
+	}
+	if (first_row >= world->height || last_row < 0)
+		return (1);
+	if (world->grid[first_row][col] != '1'
+		|| world->grid[last_row][col] != '1')
+		return (0);
+	return (1);
+}
+
 static int	check_map_borders(t_world *world)
 {
 	int	i;
@@ -62,30 +92,14 @@ static int	check_map_borders(t_world *world)
 			return (0);
 		i++;
 	}
-	return (1);
-}
-
-static char	**duplicate_map(t_world *world)
-{
-	char	**map_copy;
-	int		i;
-
 	i = 0;
-	map_copy = malloc(sizeof(char *) * (world->height + 1));
-	if (!map_copy)
-		return (NULL);
-	while (i < world->height)
+	while (i < world->width)
 	{
-		map_copy[i] = duplicate_string(world->grid[i]);
-		if (!map_copy[i])
-		{
-			free_string_array(map_copy);
-			return (NULL);
-		}
+		if (!check_column_borders(world, i))
+			return (0);
 		i++;
 	}
-	map_copy[i] = NULL;
-	return (map_copy);
+	return (1);
 }
 
 static int	is_valid_walkable_cell(char cell)
@@ -96,87 +110,141 @@ static int	is_valid_walkable_cell(char cell)
 	return (0);
 }
 
-static int	flood_fill(t_world *world, char **map, int x, int y)
+static int	check_space_neighbors(t_world *world, int row, int col)
 {
 	char	cell;
 
-	if (y < 0 || y >= world->height || x < 0 || x >= world->width)
-		return (0);
-	if (!map[y])
-		return (0);
-	cell = map[y][x];
-	if (cell == '\0' || cell == '\n' || cell == '\r')
-		return (0);
-	if (cell == '1' || cell == 'V')
-		return (1);
-	if (cell == ' ' || cell == '\t')
+	if (row > 0)
 	{
-		if (x == world->width - 1 || y == 0 || y == world->height - 1 || x == 0)
-			return (1);
-		return (0);
+		cell = world->grid[row - 1][col];
+		if (cell && is_valid_walkable_cell(cell))
+			return (0);
 	}
-	if (!is_valid_walkable_cell(cell))
-		return (0);
-	map[y][x] = 'V';
-	if (!flood_fill(world, map, x + 1, y))
-		return (0);
-	if (!flood_fill(world, map, x - 1, y))
-		return (0);
-	if (!flood_fill(world, map, x, y + 1))
-		return (0);
-	if (!flood_fill(world, map, x, y - 1))
-		return (0);
+	if (row < world->height - 1)
+	{
+		cell = world->grid[row + 1][col];
+		if (cell && is_valid_walkable_cell(cell))
+			return (0);
+	}
+	if (col > 0)
+	{
+		cell = world->grid[row][col - 1];
+		if (cell && is_valid_walkable_cell(cell))
+			return (0);
+	}
+	if (world->grid[row][col + 1])
+	{
+		cell = world->grid[row][col + 1];
+		if (is_valid_walkable_cell(cell))
+			return (0);
+	}
 	return (1);
 }
 
-static int	find_and_check_player(t_world	*world, char **map_copy, int *x,
-	int *y)
+static int	check_all_spaces(t_world *world)
 {
-	int	player_found;
 	int	row;
 	int	col;
 
-	player_found = 0;
 	row = 0;
-	while (row < world->height && !player_found)
+	while (row < world->height)
 	{
 		col = 0;
-		while (map_copy[row][col])
+		while (world->grid[row][col])
 		{
-			if (map_copy[row][col] == 'N' || map_copy[row][col] == 'S' ||
-				map_copy[row][col] == 'E' || map_copy[row][col] == 'W')
+			if (world->grid[row][col] == ' ')
 			{
-				*x = col;
-				*y = row;
-				player_found = 1;
-				break ;
+				if (!check_space_neighbors(world, row, col))
+					return (0);
 			}
 			col++;
 		}
-		if (!player_found)
-			row++;
+		row++;
 	}
-	return (player_found);
+	return (1);
+}
+
+static int	has_wall_after_space(char *row, int start)
+{
+	int	i;
+
+	i = start;
+	while (row[i] && row[i] != '\n')
+	{
+		if (row[i] == '1')
+			return (1);
+		if (row[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (0);
+}
+
+static int	count_vertical_spaces(t_world *world, int col)
+{
+	int	count;
+	int	row;
+
+	count = 0;
+	row = 0;
+	while (row < world->height)
+	{
+		if (world->grid[row][col] && world->grid[row][col] == ' ')
+			count++;
+		row++;
+	}
+	return (count);
+}
+
+static int	check_vertical_space_separation(t_world *world, int col)
+{
+	return (count_vertical_spaces(world, col) >= world->height / 2);
+}
+
+static int	check_double_map_in_row(t_world *world, int row_idx)
+{
+	char	*row;
+	int		i;
+	int		found_content;
+
+	row = world->grid[row_idx];
+	i = 0;
+	found_content = 0;
+	while (row[i] && row[i] != '\n')
+	{
+		if (row[i] == '1' || is_valid_walkable_cell(row[i]))
+			found_content = 1;
+		if (row[i] == ' ' && found_content && has_wall_after_space(row, i + 1))
+		{
+			if (check_vertical_space_separation(world, i))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	check_double_map(t_world *world)
+{
+	int	row;
+
+	row = 0;
+	while (row < world->height)
+	{
+		if (!check_double_map_in_row(world, row))
+			return (0);
+		row++;
+	}
+	return (1);
 }
 
 int	check_map_closed(t_world *world)
 {
-	char	**map_copy;
-	int		x;
-	int		y;
-	int		is_valid;
-
 	if (!check_map_borders(world))
 		return (0);
-	map_copy = duplicate_map(world);
-	if (!map_copy)
+	if (!check_all_spaces(world))
 		return (0);
-	is_valid = 0;
-	if (find_and_check_player(world, map_copy, &x, &y))
-	{
-		if (flood_fill(world, map_copy, x, y))
-			is_valid = 1;
-	}
-	free_string_array(map_copy);
-	return (is_valid);
+	if (!check_double_map(world))
+		return (0);
+	return (1);
 }
