@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 19:50:35 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/06 11:22:01 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ int	world_validate(t_world *world)
 		return (0);
 	if (!check_floor_ceiling_set(world))
 		return (0);
-	if (!check_player_exists(world))
-		return (0);
 	if (!check_map_closed(world))
-		return (report_error("Map is not closed / surrounded by walls"));
+		return (report_error("Map is not closed or surrounded by walls"));
 	return (1);
 }
 

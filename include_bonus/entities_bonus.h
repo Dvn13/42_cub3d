@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:08:15 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/06 11:32:14 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,14 @@ void						character_initialize_position(
 								t_world *world);
 void						character_destroy(t_character *character);
 
+int							is_valid_walkable_cell(char cell);
+int							check_double_map_in_row(t_world *world,
+								int row_idx);
+
 char						*read_file_content(const char *filename);
 
-int							is_map_line(char *line);
-void						parse_map_dimensions(char **lines, int start_index,
-								t_world *world);
+int							check_map_borders(t_world *world);
+
 void						copy_map_data(char **lines, int start_index,
 								t_world *world);
 
@@ -145,13 +148,13 @@ void						fill_sprite_array(t_world *world);
 int							init_sprite_positions(t_world *world);
 void						count_map_players(t_world *world);
 
-int							parse_color_value(char *color_str);
+int							parse_texture_line(t_world *world, char *line);
 
-int							check_player_exists(t_world *world);
-int							flood_fill(t_world *world, char **map, int x,
-								int y);
 int							check_map_closed(t_world *world);
 
-int							parse_texture_line(t_world *world, char *line);
+int							parse_color_value(char *color_str);
+int							is_map_line(char *line);
+void						parse_map_dimensions(char **lines, int start_index,
+								t_world *world);
 
 #endif

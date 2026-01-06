@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 MLX_DIR = ./mlx
@@ -54,7 +54,9 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/core_bonus/engine_error_bonus.c \
 				bonus/core_bonus/engine_init_bonus.c \
 				bonus/entities_bonus/character_bonus.c \
+				bonus/entities_bonus/double_map_check_bonus.c \
 				bonus/entities_bonus/file_content_bonus.c \
+				bonus/entities_bonus/map_border_check_bonus.c \
 				bonus/entities_bonus/map_check_bonus.c \
 				bonus/entities_bonus/map_layout_bonus.c \
 				bonus/entities_bonus/texture_bonus.c \
