@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:53:15 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:30:24 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/06 17:27:32 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 int	is_map_line(char *line)
 {
 	int	i;
+	int	has_map_char;
 
 	if (!line || !line[0])
 		return (0);
 	i = 0;
+	has_map_char = 0;
 	while (line[i])
 	{
-		if (line[i] != '0' && line[i] != '1' && line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'E' && line[i] != 'W' && line[i] != ' '
-			&& line[i] != '\n')
+		if (line[i] == '0' || line[i] == '1' || line[i] == 'N'
+			|| line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+			has_map_char = 1;
+		else if (line[i] != ' ' && line[i] != '\n')
 			return (0);
 		i++;
 	}
-	return (1);
+	return (has_map_char);
 }
 
 void	parse_map_dimensions(char **lines, int start_index, t_world *world)

@@ -15,20 +15,23 @@
 int	is_map_line(char *line)
 {
 	int	i;
+	int	has_map_char;
 
 	if (!line || !line[0])
 		return (0);
 	i = 0;
+	has_map_char = 0;
 	while (line[i])
 	{
-		if (line[i] != '0' && line[i] != '1' && line[i] != 'N'
-			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
-			&& line[i] != 'D' && line[i] != 'O' && line[i] != ' '
-			&& line[i] != '\n' && line[i] != SPRITE_CHAR)
+		if (line[i] == '0' || line[i] == '1' || line[i] == 'N'
+			|| line[i] == 'S' || line[i] == 'E' || line[i] == 'W'
+			|| line[i] == 'D' || line[i] == 'O' || line[i] == SPRITE_CHAR)
+			has_map_char = 1;
+		else if (line[i] != ' ' && line[i] != '\n')
 			return (0);
 		i++;
 	}
-	return (1);
+	return (has_map_char);
 }
 
 void	parse_map_dimensions(char **lines, int start_index, t_world *world)
