@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/06 11:22:01 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 14:52:06 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	world_validate(t_world *world)
 {
 	if (!world || !world->grid)
 		return (report_error("Map data is missing or empty"));
-	count_map_players(world);
+	if (!count_map_players(world))
+		return (0);
 	if (!init_sprite_positions(world))
 		return (0);
 	if (!check_textures_loaded(world))

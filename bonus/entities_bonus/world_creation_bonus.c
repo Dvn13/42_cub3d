@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    world_creation_bonus.c                            :+:      :+:    :+:   */
+/*   world_creation_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:57:33 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:59:26 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 15:02:51 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_world	*world_create(void)
 	world->south_texture_path = NULL;
 	world->east_texture_path = NULL;
 	world->west_texture_path = NULL;
-	world->floor_color = 0x473E37;
-	world->ceiling_color = 0xD8E3E7;
+	world->floor_color = -1;
+	world->ceiling_color = -1;
 	world->character_count = 0;
 	world->floor_texture_path = NULL;
 	world->ceiling_texture_path = NULL;

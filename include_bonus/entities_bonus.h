@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 12:40:23 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 14:52:30 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int							world_parse_file(t_world *world,
 int							check_floor_ceiling_set(t_world *world);
 int							check_textures_loaded(t_world *world);
 int							init_sprite_positions(t_world *world);
-void						count_map_players(t_world *world);
+int							count_map_players(t_world *world);
 
 int							parse_color_value(char *color_str);
 
