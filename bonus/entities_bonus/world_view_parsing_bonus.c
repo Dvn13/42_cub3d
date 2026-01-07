@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:08:36 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 11:29:28 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 15:28:28 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	set_texture_path(char **dest, char *path, char *err_msg)
 {
 	if (*dest)
-		return (report_error(err_msg));
+		return (report_error(err_msg), -1);
 	*dest = duplicate_string(path);
 	return (1);
 }
