@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:17:56 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/06 17:26:15 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 11:57:14 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	parse_config_line(t_world *world, char *line)
 	int	col_res;
 
 	tex_res = parse_texture_line(world, line);
-	col_res = parse_color_line(world, line);
+	col_res = parse_color_or_texture(world, line);
 	if (tex_res < 0 || col_res < 0)
 		return (-1);
 	if (tex_res == 0 && col_res == 0)

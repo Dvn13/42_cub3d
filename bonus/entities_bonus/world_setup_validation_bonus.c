@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:50:15 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:14:00 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 11:59:27 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_textures_loaded(t_world *world)
 	return (1);
 }
 
-void	fill_sprite_array(t_world *world)
+static void	fill_sprite_array(t_world *world)
 {
 	int	i;
 	int	j;

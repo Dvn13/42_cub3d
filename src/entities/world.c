@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:16:11 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 10:56:10 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,4 @@ int	world_is_wall(t_world *world, int x, int y)
 		|| y >= world->height)
 		return (1);
 	return (world->grid[y][x] == WALL_SYMBOL);
-}
-
-char	world_get_cell(t_world *world, int x, int y)
-{
-	if (!world || !world->grid || x < 0 || y < 0 || x >= world->width
-		|| y >= world->height)
-		return (' ');
-	return (world->grid[y][x]);
 }

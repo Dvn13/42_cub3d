@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:08:36 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 20:00:43 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 11:29:28 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	parse_texture_line(t_world *world, char *line)
 	int		result;
 
 	tokens = split_string(line, ' ');
-	if (!tokens)
-		return (0);
-	if (!tokens[0] || !tokens[1])
+	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
 	{
 		free_string_array(tokens);
 		return (0);

@@ -20,18 +20,16 @@ SOURCES = src/main.c \
 		  src/core/engine_init.c \
 		  src/core/engine_error.c \
 		  src/entities/character.c \
-		  src/entities/double_map_check.c \
 		  src/entities/file_content.c \
-		  src/entities/map_border_check.c \
 		  src/entities/map_check.c \
 		  src/entities/map_layout.c \
 		  src/entities/texture.c \
 		  src/entities/world_creation.c \
-		  src/entities/world.c \
 		  src/entities/world_parsing.c \
 		  src/entities/world_utils.c \
 		  src/entities/world_validation.c \
 		  src/entities/world_view_parsing.c \
+		  src/entities/world.c \
 		  src/graphics/ray_tracer.c \
 		  src/graphics/ray_calculation.c \
 		  src/graphics/renderer.c \
@@ -54,20 +52,18 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/core_bonus/engine_error_bonus.c \
 				bonus/core_bonus/engine_init_bonus.c \
 				bonus/entities_bonus/character_bonus.c \
-				bonus/entities_bonus/double_map_check_bonus.c \
 				bonus/entities_bonus/file_content_bonus.c \
-				bonus/entities_bonus/map_border_check_bonus.c \
 				bonus/entities_bonus/map_check_bonus.c \
 				bonus/entities_bonus/map_layout_bonus.c \
 				bonus/entities_bonus/texture_bonus.c \
 				bonus/entities_bonus/world_bonus.c \
 				bonus/entities_bonus/world_creation_bonus.c \
-				bonus/entities_bonus/world_view_parsing_bonus.c \
 				bonus/entities_bonus/world_parse_surfaces_bonus.c  \
 				bonus/entities_bonus/world_parsing_bonus.c \
 				bonus/entities_bonus/world_setup_validation_bonus.c \
 				bonus/entities_bonus/world_utils_bonus.c \
 				bonus/entities_bonus/world_validation_bonus.c \
+				bonus/entities_bonus/world_view_parsing_bonus.c \
 				bonus/graphics_bonus/minimap_bonus.c \
 				bonus/graphics_bonus/ray_calculation_bonus.c \
 				bonus/graphics_bonus/ray_tracer_bonus.c \

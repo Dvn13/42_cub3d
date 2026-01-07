@@ -6,85 +6,48 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/06 11:20:04 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 12:36:03 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-static int	check_vertical_neighbors(t_world *world, int row, int col)
+static int	walk(char cell)
 {
-	char	cell;
-
-	if (row > 0)
-	{
-		cell = world->grid[row - 1][col];
-		if (cell && is_valid_walkable_cell(cell))
-			return (0);
-	}
-	if (row < world->height - 1)
-	{
-		cell = world->grid[row + 1][col];
-		if (cell && is_valid_walkable_cell(cell))
-			return (0);
-	}
-	return (1);
-}
-
-static int	check_space_neighbors(t_world *world, int row, int col)
-{
-	char	cell;
-
-	if (!check_vertical_neighbors(world, row, col))
+	if (!cell)
 		return (0);
-	if (col > 0)
-	{
-		cell = world->grid[row][col - 1];
-		if (cell && is_valid_walkable_cell(cell))
-			return (0);
-	}
-	if (world->grid[row][col + 1])
-	{
-		cell = world->grid[row][col + 1];
-		if (is_valid_walkable_cell(cell))
-			return (0);
-	}
-	return (1);
+	if (cell == '0' || cell == 'N' || cell == 'S'
+		|| cell == 'E' || cell == 'W' || cell == 'O' || cell == SPRITE_CHAR
+		|| cell == 'D' || cell == '1')
+		return (1);
+	return (0);
 }
 
-static int	check_all_spaces(t_world *world)
+static int	check_map_borders(t_world *world)
 {
-	int	row;
-	int	col;
+	int	i;
+	int	j;
 
-	row = 0;
-	while (row < world->height)
+	i = 0;
+	while (world->grid[i])
 	{
-		col = 0;
-		while (world->grid[row][col])
+		j = -1;
+		while (world->grid[i][++j])
 		{
-			if (world->grid[row][col] == ' ')
+			if (world->grid[i][j] == '0' || world->grid[i][j] == 'N'
+				|| world->grid[i][j] == 'S' || world->grid[i][j] == 'E'
+				|| world->grid[i][j] == 'W' || world->grid[i][j] == 'D'
+				|| world->grid[i][j] == 'O')
 			{
-				if (!check_space_neighbors(world, row, col))
+				if (i == 0 || world->grid[i + 1] == 0)
+					return (0);
+				if (!walk(world->grid[i][j + 1]) || !walk(world->grid[i][j - 1])
+					|| !walk(world->grid[i + 1][j])
+					|| !walk(world->grid[i - 1][j]))
 					return (0);
 			}
-			col++;
 		}
-		row++;
-	}
-	return (1);
-}
-
-static int	check_double_map(t_world *world)
-{
-	int	row;
-
-	row = 0;
-	while (row < world->height)
-	{
-		if (!check_double_map_in_row(world, row))
-			return (0);
-		row++;
+		i++;
 	}
 	return (1);
 }
@@ -92,10 +55,6 @@ static int	check_double_map(t_world *world)
 int	check_map_closed(t_world *world)
 {
 	if (!check_map_borders(world))
-		return (0);
-	if (!check_all_spaces(world))
-		return (0);
-	if (!check_double_map(world))
 		return (0);
 	return (1);
 }

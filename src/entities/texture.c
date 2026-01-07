@@ -6,13 +6,13 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:18:34 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/23 19:18:35 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 12:35:10 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_texture	*texture_allocate(void)
+static t_texture	*texture_allocate(void)
 {
 	t_texture	*texture;
 
@@ -29,7 +29,8 @@ t_texture	*texture_allocate(void)
 	return (texture);
 }
 
-int	texture_load_from_file(t_texture *texture, void *mlx_ptr, char *path)
+static int	texture_load_from_file(t_texture *texture, void *mlx_ptr,
+	char *path)
 {
 	if (!texture || !mlx_ptr || !path)
 		return (0);

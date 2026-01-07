@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:13:36 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 11:50:02 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void						ray_trace_calculate_wall_x(t_ray *ray,
 								t_character *character);
 int							ray_trace_get_texture_index(t_ray *ray);
 
-int							load_all_textures(t_renderer *renderer,
-								t_world *world, void *mlx_ptr);
 int							load_bonus_textures(t_engine *engine);
 void						draw_sprites_on_minimap(t_engine *engine);
 void						render_sprites(t_engine *engine);

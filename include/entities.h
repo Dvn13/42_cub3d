@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/05 20:12:15 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 12:38:14 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_character	t_character;
 typedef struct s_world		t_world;
 typedef struct s_texture	t_texture;
 typedef struct s_ray		t_ray;
+typedef struct s_renderer	t_renderer;
 
 struct						s_position
 {
@@ -95,43 +96,35 @@ t_character					*character_allocate(void);
 void						character_initialize_position(
 								t_character *character,
 								t_world *world);
-void						character_set_orientation(t_character *character,
-								char orientation);
 void						character_destroy(t_character *character);
-
-int							check_double_map_in_row(t_world *world,
-								int row_idx);
 
 char						*read_file_content(const char *filename);
 
-int							check_map_borders(t_world *world);
-
+int							is_map_line(char *line);
+void						parse_map_dimensions(char **lines, int start_index,
+								t_world *world);
 void						copy_map_data(char **lines, int start_index,
 								t_world *world);
 
 int							validate_map_layout(char *content);
 
-int							parse_color_line(t_world *world, char *line);
-int							parse_texture_line(t_world *world, char *line);
+void						texture_destroy(t_texture *texture, void *mlx_ptr);
+int							load_all_textures(t_renderer *renderer,
+								t_world *world, void *mlx_ptr);
 
 t_world						*world_create(void);
+void						world_destroy(t_world *world);
+
 int							world_parse_file(t_world *world,
 								const char *filename);
-int							world_validate(t_world *world);
-void						world_destroy(t_world *world);
-int							world_is_wall(t_world *world, int x, int y);
-char						world_get_cell(t_world *world, int x, int y);
-
-t_texture					*texture_allocate(void);
-int							texture_load_from_file(t_texture *texture,
-								void *mlx_ptr, char *path);
-void						texture_destroy(t_texture *texture, void *mlx_ptr);
-
-int							is_valid_walkable_cell(char cell);
-int							check_map_closed(t_world *world);
 
 int							parse_color_value(char *color_str);
-int							is_map_line(char *line);
-void						parse_map_dimensions(char **lines, int start_index,
-								t_world *world);
+
+int							check_map_closed(t_world *world);
+
+int							parse_texture_line(t_world *world, char *line);
+int							parse_color_line(t_world *world, char *line);
+
+int							world_validate(t_world *world);
+int							world_is_wall(t_world *world, int x, int y);
 #endif

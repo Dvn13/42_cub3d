@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 14:27:07 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 17:22:40 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 10:46:18 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	set_east_west_orientation(t_character *character, char orientation,
 	}
 }
 
-void	character_set_orientation(t_character *character, char orientation)
+static void	character_set_orientation(t_character *character, char orientation)
 {
 	double	fov_radians;
 	double	plane_len;
