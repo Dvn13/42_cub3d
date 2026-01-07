@@ -6,13 +6,13 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/05 20:17:02 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:32:24 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	interact_with_door(t_engine *engine)
+static void	interact_with_door(t_engine *engine)
 {
 	int		target_x;
 	int		target_y;

@@ -6,13 +6,13 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:31:28 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 14:10:43 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:32:04 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-int	main_loop_hook(t_engine *engine)
+static int	main_loop_hook(t_engine *engine)
 {
 	if (engine && engine->is_running)
 		engine_update(engine);

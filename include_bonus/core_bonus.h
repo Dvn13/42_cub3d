@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:15 by gbodur            #+#    #+#             */
-/*   Updated: 2025/12/31 22:51:17 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:29:17 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_engine	t_engine;
 
 int		engine_initialize(t_engine *engine, char *map_file);
+
 int		engine_main_loop(t_engine *engine);
 void	engine_update(t_engine *engine);
 void	engine_shutdown(t_engine *engine);

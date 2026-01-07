@@ -6,35 +6,29 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 04:03:25 by mdivan            #+#    #+#             */
-/*   Updated: 2026/01/04 14:33:34 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:55:51 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void	draw_sprites_on_minimap(t_engine *engine)
+int	calculate_minimap_scale_for_sprite(t_engine *engine)
 {
-	int			i;
-	int			scr_x;
-	int			scr_y;
-	t_sprite	*sprite;
+	int	scale_x;
+	int	scale_y;
+	int	scale;
 
-	i = 0;
-	while (i < engine->world->sprite_count)
-	{
-		sprite = &engine->world->sprites[i];
-		if (sprite->is_collected == 0)
-		{
-			scr_x = MINIMAP_PAD + (int)(sprite->x * MINIMAP_SCALE);
-			scr_y = MINIMAP_PAD + (int)(sprite->y * MINIMAP_SCALE);
-			renderer_put_pixel(engine->renderer, scr_x, scr_y, 0xFFD700);
-			renderer_put_pixel(engine->renderer, scr_x + 1, scr_y, 0xFFD700);
-			renderer_put_pixel(engine->renderer, scr_x, scr_y + 1, 0xFFD700);
-			renderer_put_pixel(engine->renderer, scr_x + 1, scr_y + 1,
-				0xFFD700);
-		}
-		i++;
-	}
+	scale_x = MINIMAP_MAX_SIZE / engine->world->width;
+	scale_y = MINIMAP_MAX_SIZE / engine->world->height;
+	if (scale_x < scale_y)
+		scale = scale_x;
+	else
+		scale = scale_y;
+	if (scale < 1)
+		scale = 1;
+	if (scale > MINIMAP_SCALE)
+		scale = MINIMAP_SCALE;
+	return (scale);
 }
 
 static void	draw_sprite_stripe(t_engine *eng, t_spr_calc *spr_calc,

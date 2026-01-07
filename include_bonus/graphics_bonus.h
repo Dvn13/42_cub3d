@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 11:50:02 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 17:01:16 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,45 +68,58 @@ struct						s_floor
 	int						ty;
 };
 
-void						render_minimap(t_engine *engine);
-t_renderer					*renderer_create(void *mlx_ptr);
-void						renderer_destroy(t_renderer *renderer,
-								void *mlx_ptr);
-void						renderer_clear_screen(t_renderer *renderer,
+int							calculate_minimap_scale(t_engine *engine);
+void						draw_minimap_line(t_engine *engine, int *coords);
+void						draw_minimap_square(t_engine *engine, int x, int y,
 								int color);
-void						renderer_put_pixel(t_renderer *renderer, int x,
-								int y, int color);
-int							renderer_get_pixel_color(t_texture *texture, int x,
-								int y);
-void						renderer_draw_to_window(t_renderer *renderer,
-								void *mlx_ptr, void *win_ptr);
+void						draw_sprites_on_minimap(t_engine *engine);
 
-void						render_frame(t_engine *engine);
-void						render_walls(t_engine *engine);
-void						render_floor_ceiling(t_engine *engine);
-void						render_vertical_line(t_renderer *renderer, int x,
-								t_ray *ray, t_texture *texture);
+void						render_minimap(t_engine *engine);
 
-void						ray_trace_init(t_ray *ray, t_character *character,
-								int screen_x);
 void						ray_trace_calculate_step_and_side_dist(t_ray *ray,
 								t_character *character);
-void						ray_trace_perform_dda(t_ray *ray, t_world *world);
 void						ray_trace_calculate_wall_distance(t_ray *ray,
 								t_character *character);
 void						ray_trace_calculate_draw_limits(t_ray *ray);
 void						ray_trace_calculate_wall_x(t_ray *ray,
 								t_character *character);
+
+void						ray_trace_init(t_ray *ray, t_character *character,
+								int screen_x);
+void						ray_trace_perform_dda(t_ray *ray, t_world *world);
 int							ray_trace_get_texture_index(t_ray *ray);
 
+void						render_walls(t_engine *engine);
+
+void						render_floor_ceiling(t_engine *engine);
+
+void						renderer_put_pixel(t_renderer *renderer, int x,
+								int y, int color);
+int							renderer_get_pixel_color(t_texture *texture, int x,
+								int y);
+void						render_frame(t_engine *engine);
+
+t_renderer					*renderer_create(void *mlx_ptr);
+void						renderer_destroy(t_renderer *renderer,
+								void *mlx_ptr);
+void						renderer_clear_screen(t_renderer *renderer,
+								int color);
+
+void						renderer_draw_to_window(t_renderer *renderer,
+								void *mlx_ptr, void *win_ptr);
+
 int							load_bonus_textures(t_engine *engine);
-void						draw_sprites_on_minimap(t_engine *engine);
+void						destroy_bonus_textures(t_renderer *renderer,
+								void *mlx_ptr);
+
+int							calculate_minimap_scale_for_sprite(
+								t_engine *engine);
 void						render_sprites(t_engine *engine);
+
 void						sort_sprites(t_sprite *sprites, int count);
 void						calculate_sprite_distances(t_engine *engine);
 void						calc_sprite_transform(t_engine *eng, t_sprite *spr,
 								t_spr_calc *spr_calc);
 void						calc_sprite_dims(t_spr_calc *calc);
-void						destroy_bonus_textures(t_renderer *renderer,
-								void *mlx_ptr);
+
 #endif

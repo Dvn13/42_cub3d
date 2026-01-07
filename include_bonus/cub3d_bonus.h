@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 14:58:55 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:16:48 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 
 # define MINIMAP_SCALE 10
 # define MINIMAP_PAD 10
+# define MINIMAP_MAX_SIZE 250
 # define COLOR_WALL 0x808080
 # define COLOR_FLOOR 0x202020
 # define COLOR_PLAYER 0xFF0000

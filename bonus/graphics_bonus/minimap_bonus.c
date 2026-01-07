@@ -6,76 +6,25 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 16:04:29 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/04 17:12:58 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 17:02:07 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-static void	draw_minimap_line(t_engine *engine, int *coords)
-{
-	double	delta_x;
-	double	delta_y;
-	double	steps;
-	double	x;
-	double	y;
-
-	delta_x = coords[2] - coords[0];
-	delta_y = coords[3] - coords[1];
-	if (fabs(delta_x) > fabs(delta_y))
-		steps = fabs(delta_x);
-	else
-		steps = fabs(delta_y);
-	delta_x /= steps;
-	delta_y /= steps;
-	x = coords[0];
-	y = coords[1];
-	while (steps >= 0)
-	{
-		if (x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
-			renderer_put_pixel(engine->renderer, (int)x, (int)y, 0xFF0000);
-		x += delta_x;
-		y += delta_y;
-		steps--;
-	}
-}
-
 static void	draw_player_direction(t_engine *engine)
 {
 	int	coords[4];
 	int	line_len;
+	int	scale;
 
-	line_len = MINIMAP_SCALE * 2;
-	coords[0] = MINIMAP_PAD + (int)(engine->character->pos.x * MINIMAP_SCALE);
-	coords[1] = MINIMAP_PAD + (int)(engine->character->pos.y * MINIMAP_SCALE);
+	scale = calculate_minimap_scale(engine);
+	line_len = scale * 2;
+	coords[0] = MINIMAP_PAD + (int)(engine->character->pos.x * scale);
+	coords[1] = MINIMAP_PAD + (int)(engine->character->pos.y * scale);
 	coords[2] = coords[0] + (int)(engine->character->dir.x * line_len);
 	coords[3] = coords[1] + (int)(engine->character->dir.y * line_len);
 	draw_minimap_line(engine, coords);
-}
-
-static void	draw_minimap_square(t_engine *engine, int x, int y, int color)
-{
-	int	i;
-	int	j;
-	int	pixel_x;
-	int	pixel_y;
-
-	i = 0;
-	while (i < MINIMAP_SCALE)
-	{
-		j = 0;
-		while (j < MINIMAP_SCALE)
-		{
-			pixel_x = MINIMAP_PAD + (x * MINIMAP_SCALE) + j;
-			pixel_y = MINIMAP_PAD + (y * MINIMAP_SCALE) + i;
-			if (pixel_x < SCREEN_WIDTH && pixel_y < SCREEN_HEIGHT)
-			{
-				renderer_put_pixel(engine->renderer, pixel_x, pixel_y, color);
-			}
-			j++;
-		}
-		i++;
-	}
 }
 
 static void	draw_player_on_minimap(t_engine *engine)
@@ -84,9 +33,11 @@ static void	draw_player_on_minimap(t_engine *engine)
 	int	center_y;
 	int	i;
 	int	j;
+	int	scale;
 
-	center_x = MINIMAP_PAD + (int)(engine->character->pos.x * MINIMAP_SCALE);
-	center_y = MINIMAP_PAD + (int)(engine->character->pos.y * MINIMAP_SCALE);
+	scale = calculate_minimap_scale(engine);
+	center_x = MINIMAP_PAD + (int)(engine->character->pos.x * scale);
+	center_y = MINIMAP_PAD + (int)(engine->character->pos.y * scale);
 	i = -2;
 	while (i <= 2)
 	{

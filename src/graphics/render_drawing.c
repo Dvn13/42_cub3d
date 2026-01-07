@@ -6,33 +6,11 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:01:26 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 18:40:53 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/07 16:50:39 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	render_walls(t_engine *engine)
-{
-	t_ray	ray;
-	int		x;
-
-	if (!engine || !engine->character || !engine->world || !engine->renderer)
-		return ;
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		ray_trace_init(&ray, engine->character, x);
-		ray_trace_calculate_step_and_side_dist(&ray, engine->character);
-		ray_trace_perform_dda(&ray, engine->world);
-		ray_trace_calculate_wall_distance(&ray, engine->character);
-		ray_trace_calculate_draw_limits(&ray);
-		ray_trace_calculate_wall_x(&ray, engine->character);
-		render_vertical_line(engine->renderer, x, &ray,
-			engine->renderer->textures[ray_trace_get_texture_index(&ray)]);
-		x++;
-	}
-}
 
 void	render_floor_ceiling(t_engine *engine)
 {
@@ -74,7 +52,7 @@ static int	calc_texture_x(t_ray *ray, t_texture *texture)
 	return (tex_x);
 }
 
-void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
+static void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 		t_texture *texture)
 {
 	int		y;
@@ -101,5 +79,27 @@ void	render_vertical_line(t_renderer *renderer, int x, t_ray *ray,
 		renderer_put_pixel(renderer, x, y,
 			renderer_get_pixel_color(texture, tex_x, tex_y));
 		y++;
+	}
+}
+
+void	render_walls(t_engine *engine)
+{
+	t_ray	ray;
+	int		x;
+
+	if (!engine || !engine->character || !engine->world || !engine->renderer)
+		return ;
+	x = 0;
+	while (x < SCREEN_WIDTH)
+	{
+		ray_trace_init(&ray, engine->character, x);
+		ray_trace_calculate_step_and_side_dist(&ray, engine->character);
+		ray_trace_perform_dda(&ray, engine->world);
+		ray_trace_calculate_wall_distance(&ray, engine->character);
+		ray_trace_calculate_draw_limits(&ray);
+		ray_trace_calculate_wall_x(&ray, engine->character);
+		render_vertical_line(engine->renderer, x, &ray,
+			engine->renderer->textures[ray_trace_get_texture_index(&ray)]);
+		x++;
 	}
 }
