@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/08 18:58:28 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:26:12 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_map_borders(t_world *world)
 					|| !walk(world->grid[i + 1][j])
 					|| !walk(world->grid[i - 1][j]))
 					return (0);
-			}	
+			}
 		}
 		i++;
 	}

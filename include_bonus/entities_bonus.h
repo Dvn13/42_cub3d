@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/08 19:20:36 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:27:25 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void						copy_map_data(char **lines, int start_index,
 								t_world *world);
 
 int							count_map_players(t_world *world);
-int 						check_space_map(t_world *world);								
+int							check_space_map(t_world *world);
 int							validate_map_layout(char *content);
 
 t_texture					*texture_allocate(void);
