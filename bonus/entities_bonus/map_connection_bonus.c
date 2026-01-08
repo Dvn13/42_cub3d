@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_connection_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 19:01:40 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/08 19:26:22 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:33:44 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static void	recursive_check(char **map, int y, int x, int **visited)
 	if (map[y][x] == ' ' || visited[y][x])
 		return ;
 	visited[y][x] = 'F';
-	flood_fill(map, y + 1, x, visited);
-	flood_fill(map, y - 1, x, visited);
-	flood_fill(map, y, x + 1, visited);
-	flood_fill(map, y, x - 1, visited);
+	recursive_check(map, y + 1, x, visited);
+	recursive_check(map, y - 1, x, visited);
+	recursive_check(map, y, x + 1, visited);
+	recursive_check(map, y, x - 1, visited);
 }
 
 int	check_space_map(t_world *world)
