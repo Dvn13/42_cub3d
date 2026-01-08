@@ -22,6 +22,7 @@ SOURCES = src/main.c \
 		  src/entities/character.c \
 		  src/entities/file_content.c \
 		  src/entities/map_check.c \
+		  src/entities/map_connection.c \
 		  src/entities/map_layout.c \
 		  src/entities/texture.c \
 		  src/entities/world_creation.c \
@@ -54,6 +55,7 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/entities_bonus/character_bonus.c \
 				bonus/entities_bonus/file_content_bonus.c \
 				bonus/entities_bonus/map_check_bonus.c \
+				bonus/entities_bonus/map_connection_bonus.c \
 				bonus/entities_bonus/map_layout_bonus.c \
 				bonus/entities_bonus/texture_bonus.c \
 				bonus/entities_bonus/world_bonus.c \
@@ -138,6 +140,6 @@ get:
 		echo "MinilibX already exists."; \
 	fi
 
-re: fclean all bonus
+re: fclean get all bonus
 
 .PHONY: all bonus clean fclean re get

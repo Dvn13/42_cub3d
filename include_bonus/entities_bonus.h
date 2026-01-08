@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:21 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 14:52:30 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:20:36 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ struct						s_world
 	int						floor_color;
 	int						ceiling_color;
 	int						character_count;
+	int						px;
+	int						py;
 	t_sprite				*sprites;
 	int						sprite_count;
 	int						current_sprite_frame;
@@ -119,6 +121,8 @@ void						parse_map_dimensions(char **lines, int start_index,
 void						copy_map_data(char **lines, int start_index,
 								t_world *world);
 
+int							count_map_players(t_world *world);
+int 						check_space_map(t_world *world);								
 int							validate_map_layout(char *content);
 
 t_texture					*texture_allocate(void);

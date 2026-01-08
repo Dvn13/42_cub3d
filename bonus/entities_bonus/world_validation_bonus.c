@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:43:50 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 12:36:03 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:06:18 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static int	check_map_borders(t_world *world)
 int	check_map_closed(t_world *world)
 {
 	if (!check_map_borders(world))
-		return (0);
+		return (report_error("Map is not closed or surrounded by walls"));
+	if (!check_space_map(world))
+		return (report_error("Map contains unreachable areas or double map"));
 	return (1);
 }

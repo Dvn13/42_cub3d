@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 10:56:10 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:51:15 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,11 @@ static int	world_check_textures_and_colors(t_world *world)
 	return (1);
 }
 
-int	world_validate(t_world *world)
+int	find_player(t_world *world)
 {
 	int	i;
 	int	j;
-	int	character_count;
 
-	if (!world_check_textures_and_colors(world))
-		return (0);
-	character_count = 0;
 	i = 0;
 	while (i < world->height)
 	{
@@ -41,14 +37,27 @@ int	world_validate(t_world *world)
 		{
 			if (world->grid[i][j] == 'N' || world->grid[i][j] == 'S'
 				|| world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
-				character_count++;
+			{
+				world->character_count++;
+				world->px = j;
+				world->py = i;
+				return (1);
+			}
 			j++;
 		}
 		i++;
 	}
-	world->character_count = character_count;
-	if (character_count != 1)
+	if (world->character_count != 1)
 		return (report_error("Map should contain just one player(N, S, E, W)"));
+	return (0);
+}
+
+int	world_validate(t_world *world)
+{
+	if (!world_check_textures_and_colors(world))
+		return (0);
+	if (!find_player(world))
+		return (0);
 	return (1);
 }
 

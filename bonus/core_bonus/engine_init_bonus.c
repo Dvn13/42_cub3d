@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:31:30 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 16:28:40 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 17:17:05 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	initialize_world(t_engine *engine, char *map_file)
 	}
 	if (!check_map_closed(engine->world))
 	{
-		report_error("Map is not closed or surrounded by walls");
 		return (0);
 	}
 	return (1);

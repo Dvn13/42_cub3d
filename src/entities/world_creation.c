@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:43:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 17:44:07 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:53:05 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_world	*world_create(void)
 	world->floor_color = -1;
 	world->ceiling_color = -1;
 	world->character_count = 0;
+	world->px = 0;
+	world->py = 0;
 	return (world);
 }
 

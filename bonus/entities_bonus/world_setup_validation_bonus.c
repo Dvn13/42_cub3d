@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:50:15 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 16:51:43 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:16:09 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,8 @@ int	count_map_players(t_world *world)
 	int	i;
 	int	j;
 
-	world->character_count = 0;
-	i = 0;
-	while (i < world->height)
+	i = -1;
+	while (++i < world->height)
 	{
 		j = -1;
 		while (world->grid[i][++j])
@@ -96,13 +95,14 @@ int	count_map_players(t_world *world)
 				world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
 			{
 				world->character_count++;
+				world->px = i;
+				world->py = j;
 			}
 			else if (world->grid[i][j] == SPRITE_CHAR)
 			{
 				world->sprite_count++;
 			}
 		}
-		i++;
 	}
 	if (world->character_count != 1)
 		return (report_error("Map should contain just one player(N, S, E, W)"));
