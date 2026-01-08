@@ -6,14 +6,14 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:30:55 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/02 17:15:22 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 13:33:49 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../mlx/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "core.h"
 # include "entities.h"
 # include "graphics.h"

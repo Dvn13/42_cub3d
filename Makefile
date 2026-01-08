@@ -4,9 +4,9 @@ NAME_BONUS = cub3D_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-MLX_DIR = ./mlx
+MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -Lmlx -lmlx -lXext -lX11 -lm
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 SRCDIR = src
 BONUSDIR = bonus
@@ -101,6 +101,10 @@ $(NAME): $(MLX_LIB) $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) $(MLX_FLAGS) -o $(NAME)
 
 $(MLX_LIB):
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		echo "MinilibX not found. Run 'make get' then run project."; \
+		exit 1; \
+	fi
 	@make -C $(MLX_DIR)
 
 $(OBJDIR)/%.o: %.c
@@ -119,10 +123,21 @@ $(OBJDIR_BONUS)/%.o: %.c
 
 clean:
 	rm -rf $(OBJDIR) $(OBJDIR_BONUS)
+	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME) $(NAME_BONUS)
+	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+	rm -rf $(MLX_DIR)
+
+get:
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MLXDIR); \
+		echo "You got MinilibX now."; \
+	else \
+		echo "MinilibX already exists."; \
+	fi
 
 re: fclean all bonus
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re get

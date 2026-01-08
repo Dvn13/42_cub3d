@@ -6,14 +6,14 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 18:53:14 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 16:16:48 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 13:34:01 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
-# include "../mlx/mlx.h"
+# include "../minilibx-linux/mlx.h"
 # include "core_bonus.h"
 # include "entities_bonus.h"
 # include "graphics_bonus.h"
