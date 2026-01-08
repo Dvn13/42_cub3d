@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/08 14:51:15 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 19:58:43 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	find_player(t_world *world)
 				world->character_count++;
 				world->px = j;
 				world->py = i;
-				return (1);
 			}
 			j++;
 		}
@@ -49,7 +48,7 @@ int	find_player(t_world *world)
 	}
 	if (world->character_count != 1)
 		return (report_error("Map should contain just one player(N, S, E, W)"));
-	return (0);
+	return (1);
 }
 
 int	world_validate(t_world *world)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_setup_validation_bonus.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 19:50:15 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/08 19:16:09 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/08 20:25:51 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	count_map_players(t_world *world)
 				world->grid[i][j] == 'E' || world->grid[i][j] == 'W')
 			{
 				world->character_count++;
-				world->px = i;
-				world->py = j;
+				world->py = i;
+				world->px = j;
 			}
 			else if (world->grid[i][j] == SPRITE_CHAR)
 			{
