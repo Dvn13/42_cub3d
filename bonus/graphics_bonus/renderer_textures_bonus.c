@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer_textures_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdivan <mdivan@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 04:03:16 by mdivan            #+#    #+#             */
-/*   Updated: 2026/01/03 04:03:19 by mdivan           ###   ########.fr       */
+/*   Updated: 2026/01/09 18:46:24 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,10 @@ static int	load_door_texture(t_engine *engine)
 
 static int	load_sprite_textures(t_engine *engine)
 {
-	int		i;
-	char	*base_path;
-	char	path[100];
-
-	i = 0;
-	base_path = "assets/sprites/Gold_";
-	while (i < 10)
-	{
-		engine->renderer->sprite_textures[i] = texture_allocate();
-		sprintf(path, "%s%d.xpm", base_path, 21 + i);
-		if (!texture_load_from_file(engine->renderer->sprite_textures[i],
-				engine->mlx_ptr, path))
-			return (0);
-		i++;
-	}
+	if (!load_sprites_first(engine))
+		return (0);
+	if (!load_sprites_second(engine))
+		return (0);
 	return (1);
 }
 

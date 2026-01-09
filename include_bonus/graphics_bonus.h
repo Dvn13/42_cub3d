@@ -6,7 +6,7 @@
 /*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 19:19:24 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 17:01:16 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/09 18:48:35 by gbodur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void						renderer_draw_to_window(t_renderer *renderer,
 								void *mlx_ptr, void *win_ptr);
 
 int							load_bonus_textures(t_engine *engine);
+int							load_sprites_first(t_engine *engine);
+int							load_sprites_second(t_engine *engine);
 void						destroy_bonus_textures(t_renderer *renderer,
 								void *mlx_ptr);
 

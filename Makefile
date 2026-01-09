@@ -72,6 +72,7 @@ BONUS_SOURCES = bonus/main_bonus.c \
 				bonus/graphics_bonus/ray_tracer_bonus.c \
 				bonus/graphics_bonus/renderer_bonus.c \
 				bonus/graphics_bonus/renderer_core_bonus.c \
+				bonus/graphics_bonus/sprite_load_bonus.c \
 				bonus/graphics_bonus/renderer_textures_bonus.c \
 				bonus/graphics_bonus/render_drawing_bonus.c \
 				bonus/graphics_bonus/render_floor_ceiling_bonus.c \
