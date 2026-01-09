@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbodur <gbodur@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: mdivan <mdivan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:52:32 by gbodur            #+#    #+#             */
-/*   Updated: 2026/01/07 14:52:06 by gbodur           ###   ########.fr       */
+/*   Updated: 2026/01/09 10:16:04 by mdivan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	world_validate(t_world *world)
 	if (!check_floor_ceiling_set(world))
 		return (0);
 	if (!check_map_closed(world))
-		return (report_error("Map is not closed or surrounded by walls"));
+		return (0);
 	return (1);
 }
 
